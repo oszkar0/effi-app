@@ -8,6 +8,8 @@ DROP TABLE IF EXISTS `role`;
 DROP TABLE IF EXISTS `users_roles`;
 DROP TABLE IF EXISTS `company`;
 DROP TABLE IF EXISTS `users_company`;
+DROP TABLE IF EXISTS `users_teams`;
+DROP TABLE IF EXISTS `teams`;
 
 -- app users table
 CREATE TABLE `users` (
@@ -66,5 +68,32 @@ CREATE TABLE `users_company` (
     ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- table to store teams
+CREATE TABLE `teams` (
+	`id` int NOT NULL AUTO_INCREMENT,
+    `name` varchar(50) NOT NULL,
+    `company_id` int NOT NULL,
+    
+    PRIMARY KEY(`id`),
+    
+    CONSTRAINT `FK_TEAM_COMPANY` FOREIGN KEY (`company_id`)
+    REFERENCES `company` (`id`)
+	ON DELETE NO ACTION ON UPDATE NO ACTION
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
+-- table to store user-team relation
+CREATE TABLE `users_teams` (
+	`user_id` int NOT NULL,
+    `team_id` int NOT NULL,
+	
+    PRIMARY KEY(`user_id`, `team_id`), 
+    
+	CONSTRAINT `FK_TEAM_USER` FOREIGN KEY (`user_id`)
+    REFERENCES `users` (`id`)
+	ON DELETE NO ACTION ON UPDATE NO ACTION,
+    
+	CONSTRAINT `FK_USER_TEAM` FOREIGN KEY (`team_id`)
+    REFERENCES `teams` (`id`)
+	ON DELETE NO ACTION ON UPDATE NO ACTION
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
     
