@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS `company`;
 DROP TABLE IF EXISTS `users_company`;
 DROP TABLE IF EXISTS `users_teams`;
 DROP TABLE IF EXISTS `teams`;
+DROP TABLE IF EXISTS `tasks`;
 
 -- app users table
 CREATE TABLE `users` (
@@ -97,3 +98,16 @@ CREATE TABLE `users_teams` (
 	ON DELETE NO ACTION ON UPDATE NO ACTION
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
     
+-- users tasks 
+CREATE TABLE `tasks` (
+	`id` int NOT NULL AUTO_INCREMENT,
+    `title` varchar(150) NOT NULL,
+    `description` varchar(500) NOT NULL,
+    `user_id` int NOT NULL,
+	
+    PRIMARY KEY(`id`),
+    
+	CONSTRAINT `FK_USER_TASK` FOREIGN KEY (`user_id`)
+    REFERENCES `users` (`id`)
+	ON DELETE NO ACTION ON UPDATE NO ACTION
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
