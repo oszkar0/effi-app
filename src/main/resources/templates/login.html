@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>EffiApp Login Page</title>
+    <style>
+        .failed{
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+<h3>EffiApp Login Page</h3>
+
+<form action="#" th:action="@{/process-login}" method="POST">
+    <!-- Check for login error -->
+    <div th:if="${param.error}">
+        <i class="failed" >Sorry! You entered invalid username/password</i>
+    </div>
+
+
+    <p>
+        Email: <input type="text" name="email"/>
+    </p>
+
+    <p>
+        Password <input type="password" name="password"/>
+    </p>
+
+  <input type="submit" value="Login"/>
+</form>
+</body>
+</html>
