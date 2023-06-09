@@ -7,10 +7,16 @@ DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `role`;
 DROP TABLE IF EXISTS `users_roles`;
 DROP TABLE IF EXISTS `company`;
-DROP TABLE IF EXISTS `users_company`;
 DROP TABLE IF EXISTS `users_teams`;
 DROP TABLE IF EXISTS `teams`;
 DROP TABLE IF EXISTS `tasks`;
+
+-- table to store companies using app
+CREATE TABLE `company` (
+	`id` int NOT NULL AUTO_INCREMENT,
+    `name` varchar(50) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 -- app users table
 CREATE TABLE `users` (
@@ -20,7 +26,13 @@ CREATE TABLE `users` (
 	`email` varchar(50) NOT NULL,
     `password` varchar(68) NOT NULL,
 	`enabled` tinyint NOT NULL,
-	PRIMARY KEY (`id`)
+    `company_id` int NOT NULL,
+	
+    PRIMARY KEY (`id`),
+    
+	CONSTRAINT `FK_USER_COMPANY` FOREIGN KEY (`company_id`)
+    REFERENCES `company` (`id`)
+	ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- available roles
@@ -46,28 +58,6 @@ CREATE TABLE `users_roles` (
 	ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- table to store companies using app
-CREATE TABLE `company` (
-	`id` int NOT NULL AUTO_INCREMENT,
-    `name` varchar(50) NOT NULL,
-    PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-
--- table to store users to company assignments 
-CREATE TABLE `users_company` (
-	`user_id` int NOT NULL,
-    `company_id` int NOT NULL,
-    
-    PRIMARY KEY (`user_id`,`company_id`),
-    
-	CONSTRAINT `FK_EMPLOYEE_OF_COMPANY` FOREIGN KEY (`user_id`)
-    REFERENCES `users` (`id`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION,
-    
-    CONSTRAINT `FK_COMPANY_OF_EMPLOYEE` FOREIGN KEY (`company_id`)
-    REFERENCES `company` (`id`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- table to store teams
 CREATE TABLE `teams` (
