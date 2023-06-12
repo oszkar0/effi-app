@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .permitAll()) //permit all for logging out
                 .exceptionHandling(configurer -> configurer
-                        .accessDeniedPage("/access-denies")); //set access denied page
+                        .accessDeniedPage("/access-denied")); //set access denied page
 
         return httpSecurity.build();
     }
