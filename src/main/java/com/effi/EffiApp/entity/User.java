@@ -13,7 +13,10 @@ public class User {
     private Long id;
 
     @Column(name="first_name")
-    private String lastname;
+    private String firstName;
+
+    @Column(name="last_name")
+    private String lastName;
 
     @Column(name="email")
     private String email;
@@ -33,15 +36,17 @@ public class User {
     public User() {
     }
 
-    public User(String lastname, String email, String password, boolean enabled) {
-        this.lastname = lastname;
+    public User(String firstName,String lastName, String email, String password, boolean enabled) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
     }
 
-    public User(String lastname, String email, String password, boolean enabled, Collection<Role> roles) {
-        this.lastname = lastname;
+    public User(String firstName,String lastName, String email, String password, boolean enabled, Collection<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
@@ -56,12 +61,20 @@ public class User {
         this.id = id;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
