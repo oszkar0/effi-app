@@ -4,4 +4,5 @@ import com.effi.EffiApp.entity.User;
 
 public interface UserDao {
     User findUserByEmail(String email);
+    boolean userExists(String email);
 }

@@ -33,4 +33,15 @@ public class UserDaoImpl implements UserDao{
 
         return user;
     }
+
+    @Override
+    public boolean userExists(String email) {
+        User user = findUserByEmail(email);
+
+        if(user == null){
+            return false;
+        }
+
+        return true;
+    }
 }
