@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Company Registration Form</title>
+</head>
+<body>
+<h3>Company Registration Form</h3>
+
+<form action="#" th:action="@{/register/process-registration}" th:object="${registrationObject}" method="POST">
+    <fieldset>
+        <legend>Company</legend>
+        <p>
+            Company name: <input type="text" name="companyName" th:field="*{companyName}"/>
+        </p>
+    </fieldset>
+
+    <fieldset>
+        <legend>User</legend>
+        <p>
+            First name: <input type="text" th:field="*{userFirstName}"/>
+        </p>
+        <p>
+            Last name: <input type="text" th:field="*{userLastName}"/>
+        </p>
+        <p>
+            Email: <input type="email" th:field="*{userEmail}"/>
+        </p>
+        <p>
+            Password: <input type="password" th:field="*{userPassword}"/>
+        </p>
+    </fieldset>
+
+    <input type="submit" value="Register"/>
+</form>
+
+</body>
+</html>
