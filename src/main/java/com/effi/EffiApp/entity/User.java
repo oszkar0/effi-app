@@ -33,10 +33,14 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+    @JoinColumn(name = "company_id")
+    private Company company;
+
     public User() {
     }
 
-    public User(String firstName,String lastName, String email, String password, boolean enabled) {
+    public User(String firstName,String lastName, String email, String password, boolean enabled, Company company) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -44,13 +48,15 @@ public class User {
         this.enabled = enabled;
     }
 
-    public User(String firstName,String lastName, String email, String password, boolean enabled, Collection<Role> roles) {
+    public User(String firstName,String lastName, String email, String password, boolean enabled, Collection<Role> roles,
+                Company company) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
         this.roles = roles;
+        this.company = company;
     }
 
     public Long getId() {
@@ -107,5 +113,13 @@ public class User {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }
