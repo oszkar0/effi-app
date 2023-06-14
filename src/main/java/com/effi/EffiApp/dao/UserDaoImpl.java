@@ -44,4 +44,9 @@ public class UserDaoImpl implements UserDao{
 
         return true;
     }
+
+    @Override
+    public void save(User user) {
+        entityManager.merge(user);
+    }
 }
