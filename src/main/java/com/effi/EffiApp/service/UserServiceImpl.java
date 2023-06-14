@@ -48,4 +48,9 @@ public class UserServiceImpl implements UserService {
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public boolean userExists(String email) {
+        return userDao.userExists(email);
+    }
 }
