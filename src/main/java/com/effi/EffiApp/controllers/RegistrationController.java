@@ -1,8 +1,7 @@
 package com.effi.EffiApp.controllers;
 
-import com.effi.EffiApp.registration.RegistartionObject;
+import com.effi.EffiApp.registration.RegistrationObject;
 import com.effi.EffiApp.service.UserService;
-import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,13 +26,13 @@ public class RegistrationController {
 
     @GetMapping("/show-registration-form")
     public String getRegistrationForm(Model model){
-        model.addAttribute("registrationObject", new RegistartionObject());
+        model.addAttribute("registrationObject", new RegistrationObject());
 
         return "registration-form";
     }
 
     @PostMapping("/process-registration")
-    public String processRegistration(@ModelAttribute("registrationObject") RegistartionObject registrationObject){
+    public String processRegistration(@ModelAttribute("registrationObject") RegistrationObject registrationObject){
         logger.info("Processing user: " + registrationObject.getUserEmail());
 
         if(userService.userExists(registrationObject.getUserEmail())){

@@ -5,7 +5,7 @@ import com.effi.EffiApp.dao.UserDao;
 import com.effi.EffiApp.entity.Company;
 import com.effi.EffiApp.entity.Role;
 import com.effi.EffiApp.entity.User;
-import com.effi.EffiApp.registration.RegistartionObject;
+import com.effi.EffiApp.registration.RegistrationObject;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -64,7 +63,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void save(RegistartionObject registrationObject) {
+    public void save(RegistrationObject registrationObject) {
         User user = new User();
 
         //add user fields

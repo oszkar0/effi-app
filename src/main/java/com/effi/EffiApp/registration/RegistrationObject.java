@@ -1,16 +1,16 @@
 package com.effi.EffiApp.registration;
 
-public class RegistartionObject {
+public class RegistrationObject {
     private String companyName;
     private String userFirstName;
     private String userLastName;
     private String userEmail;
     private String userPassword;
 
-    public RegistartionObject() {
+    public RegistrationObject() {
     }
 
-    public RegistartionObject(String companyName, String userFirstName, String userLastName, String userEmail, String userPassword) {
+    public RegistrationObject(String companyName, String userFirstName, String userLastName, String userEmail, String userPassword) {
         this.companyName = companyName;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
