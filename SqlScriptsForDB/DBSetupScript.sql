@@ -108,10 +108,15 @@ INSERT INTO `role` (name)
 VALUES 
 ('ROLE_EMPLOYEE'),('ROLE_MANAGER'),('ROLE_ADMIN');
 
+-- insert sample company
+INSERT INTO `company` (name)
+VALUES
+('cimplycompy');
+
 -- sample user
-INSERT INTO `users` (`first_name`,`last_name`,`email`,`password`,`enabled`)
+INSERT INTO `users` (`first_name`,`last_name`,`email`,`password`,`enabled`, `company_id`)
 VALUES 
-('Oskar', 'Szysiak', 'oszy@kk.com','$2a$10$SkLh0oY9nP/1ibCnhqb2GuFG0v0MokaAxOGW1QHjoyXwu9WGHAdwi',1);
+('Oskar', 'Szysiak', 'oszy@kk.com','$2a$10$SkLh0oY9nP/1ibCnhqb2GuFG0v0MokaAxOGW1QHjoyXwu9WGHAdwi',1, 1);
 
 INSERT INTO `users_roles` (user_id,role_id)
 VALUES 
