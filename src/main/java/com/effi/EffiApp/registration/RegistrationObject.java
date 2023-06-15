@@ -1,10 +1,25 @@
 package com.effi.EffiApp.registration;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class RegistrationObject {
+    @NotBlank(message = "Company name must not be empty")
+    @Size(min = 1, max = 50, message = "Company name size must be between 1 and 50")
     private String companyName;
+    @NotBlank(message = "User first name must not be empty")
+    @Size(min = 1, max = 50, message = "User first name size must be between 1 and 50")
     private String userFirstName;
+    @NotBlank(message = "User last name must not be empty")
+    @Size(min = 1, max = 50, message = "User last name size must be between 1 and 50")
     private String userLastName;
+    @Email(message = "Invalid email")
+    @NotBlank(message = "Email must not be empty")
+    @Size(min = 1, max = 50, message = "Email size must be between 1 and 50")
     private String userEmail;
+    @NotBlank(message = "Password must not be empty")
+    @Size(min = 10, max = 50, message = "Password size must be between 10 and 50")
     private String userPassword;
 
     public RegistrationObject() {
