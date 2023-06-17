@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymleaf.org/extras.spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Effi app main page</title>
+  <link rel="stylesheet" th:href="@{/css/main-page-css.css}"/>
+</head>
+<body>
+<div class="navbar">
+  <div class="logo-left-div">
+    <h1 class="logo" >Effi:</h1>
+  </div>
+  <div class="logo-right-div">
+    <span class="account-info" sec:authentication="principal.username"></span>
+    <form action="#" th:action="@{/logout}" method="POST">
+      <input  class="logout-button" type="submit" value="Logout">
+    </form>
+  </div>
+</div>
+<!-- Pozostała zawartość strony -->
+</body>
+</html>

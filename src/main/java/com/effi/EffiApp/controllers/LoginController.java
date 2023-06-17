@@ -10,8 +10,8 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping("/success")
+    @GetMapping("/main-page")
     public String getSuccessPage(){
-        return "success-page";
+        return "main-page";
     }
 }
