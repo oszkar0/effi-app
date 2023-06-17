@@ -37,9 +37,10 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .usernameParameter("email")
                         .loginProcessingUrl("/process-login")
-                        .defaultSuccessUrl("/success")
+                        .defaultSuccessUrl("/main-page")
                         .permitAll()) //set login page etc.
                 .logout(logout -> logout
+                        .logoutUrl("/logout")
                         .permitAll()) //permit all for logging out
                 .exceptionHandling(configurer -> configurer
                         .accessDeniedPage("/access-denied")); //set access denied page
