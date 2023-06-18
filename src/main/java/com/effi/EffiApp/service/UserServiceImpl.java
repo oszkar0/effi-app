@@ -6,6 +6,7 @@ import com.effi.EffiApp.entity.Company;
 import com.effi.EffiApp.entity.Role;
 import com.effi.EffiApp.entity.User;
 import com.effi.EffiApp.registration.RegistrationObject;
+import com.effi.EffiApp.security.PrincipalInformation;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -47,7 +48,8 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("Invalid username or password");
         }
 
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+        return new PrincipalInformation(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()),
+                user.getFirstName(), user.getLastName(), user.getCompany());
     }
     //function to map roles to SimpleGrantedAuthority class (maps Role class to that class using stream)
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
