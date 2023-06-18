@@ -118,7 +118,12 @@ INSERT INTO `users` (`first_name`,`last_name`,`email`,`password`,`enabled`, `com
 VALUES 
 ('Oskar', 'Szysiak', 'oszy@kk.com','$2a$10$SkLh0oY9nP/1ibCnhqb2GuFG0v0MokaAxOGW1QHjoyXwu9WGHAdwi',1, 1);
 
+INSERT INTO `users` (`first_name`,`last_name`,`email`,`password`,`enabled`, `company_id`)
+VALUES 
+('Patryk', 'Luski', 'palu@kk.com','$2a$10$SkLh0oY9nP/1ibCnhqb2GuFG0v0MokaAxOGW1QHjoyXwu9WGHAdwi',1, 1);
+
 INSERT INTO `users_roles` (user_id,role_id)
 VALUES 
-(1, 1);
+(1, 3);
+
 
