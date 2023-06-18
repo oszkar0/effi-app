@@ -2,6 +2,8 @@ package com.effi.EffiApp.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="company")
 public class Company {
@@ -12,6 +14,10 @@ public class Company {
     
     @Column(name="name")
     private String name;
+
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
+    private List<User> users;
+
 
     public Company() {
     }
@@ -34,5 +40,13 @@ public class Company {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }
