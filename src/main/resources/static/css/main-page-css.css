@@ -37,3 +37,28 @@ body {
     font-family: "Arial Black", Arial, sans-serif;
     font-size: 6px;
 }
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-table th, .user-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.user-table a {
+    color: #333;
+    text-decoration: none;
+}
+
+.user-table a:hover {
+    color: #ff0000;
+}
