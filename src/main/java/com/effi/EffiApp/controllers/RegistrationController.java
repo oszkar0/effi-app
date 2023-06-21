@@ -1,5 +1,6 @@
 package com.effi.EffiApp.controllers;
 
+import com.effi.EffiApp.registration.employee.EmployeeRegistrationObject;
 import com.effi.EffiApp.registration.owner.OwnerRegistrationObject;
 import com.effi.EffiApp.service.UserService;
 import jakarta.validation.Valid;
@@ -55,4 +56,12 @@ public class RegistrationController {
 
         return "redirect:/login";
     }
+
+    @GetMapping("/show-employee-registration-form")
+    public String getEmployeeRegistrationForm(Model model){
+        model.addAttribute("employeeRegistrationObject", new EmployeeRegistrationObject());
+
+        return "employee-form";
+    }
+    
 }

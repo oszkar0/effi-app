@@ -62,3 +62,20 @@ body {
 .user-table a:hover {
     color: #ff0000;
 }
+
+.add-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.add-link:hover {
+    background-color: #45a049;
+}
+
+.add-link:active {
+    background-color: #3e8e41;
+}
