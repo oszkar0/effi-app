@@ -5,7 +5,7 @@ import com.effi.EffiApp.dao.UserDao;
 import com.effi.EffiApp.entity.Company;
 import com.effi.EffiApp.entity.Role;
 import com.effi.EffiApp.entity.User;
-import com.effi.EffiApp.registration.RegistrationObject;
+import com.effi.EffiApp.registration.owner.OwnerRegistrationObject;
 import com.effi.EffiApp.security.PrincipalInformation;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void save(RegistrationObject registrationObject) {
+    public void save(OwnerRegistrationObject registrationObject) {
         User user = new User();
 
         //add user fields

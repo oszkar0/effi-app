@@ -1,10 +1,10 @@
-package com.effi.EffiApp.registration;
+package com.effi.EffiApp.registration.owner;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class RegistrationObject {
+public class OwnerRegistrationObject {
     @NotBlank(message = "Company name must not be empty")
     @Size(min = 1, max = 50, message = "Company name size must be between 1 and 50")
     private String companyName;
@@ -22,10 +22,10 @@ public class RegistrationObject {
     @Size(min = 10, max = 50, message = "Password size must be between 10 and 50")
     private String userPassword;
 
-    public RegistrationObject() {
+    public OwnerRegistrationObject() {
     }
 
-    public RegistrationObject(String companyName, String userFirstName, String userLastName, String userEmail, String userPassword) {
+    public OwnerRegistrationObject(String companyName, String userFirstName, String userLastName, String userEmail, String userPassword) {
         this.companyName = companyName;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;

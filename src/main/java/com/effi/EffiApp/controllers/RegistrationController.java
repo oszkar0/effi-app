@@ -1,6 +1,6 @@
 package com.effi.EffiApp.controllers;
 
-import com.effi.EffiApp.registration.RegistrationObject;
+import com.effi.EffiApp.registration.owner.OwnerRegistrationObject;
 import com.effi.EffiApp.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +28,14 @@ public class RegistrationController {
 
     @GetMapping("/show-registration-form")
     public String getRegistrationForm(Model model){
-        model.addAttribute("registrationObject", new RegistrationObject());
+        model.addAttribute("registrationObject", new OwnerRegistrationObject());
 
         return "registration-form";
     }
 
     @PostMapping("/process-registration")
     public String processRegistration(
-            @Valid @ModelAttribute("registrationObject") RegistrationObject registrationObject,
+            @Valid @ModelAttribute("registrationObject") OwnerRegistrationObject registrationObject,
             BindingResult bindingResult){
         logger.info("Processing user: " + registrationObject.getUserEmail());
 
