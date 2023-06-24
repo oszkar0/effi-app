@@ -81,8 +81,12 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_ADMIN"), roleDao.findRoleByName("ROLE_MANAGER"),
                 roleDao.findRoleByName("ROLE_EMPLOYEE")));
 
-        //set user company, we create new company, since it is the first user for this company (owner/admin)
+        //create new company, we create new company, since it is the first user for this company (owner/admin)
+        Company company = new Company(registrationObject.getCompanyName());
+
+        //set user company
         user.setCompany(new Company(registrationObject.getCompanyName()));
+        company.addUser(user);
 
         userDao.save(user);
     }
