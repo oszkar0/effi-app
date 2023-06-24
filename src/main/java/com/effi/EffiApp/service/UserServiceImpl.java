@@ -5,6 +5,7 @@ import com.effi.EffiApp.dao.UserDao;
 import com.effi.EffiApp.entity.Company;
 import com.effi.EffiApp.entity.Role;
 import com.effi.EffiApp.entity.User;
+import com.effi.EffiApp.registration.employee.EmployeeRegistrationObject;
 import com.effi.EffiApp.registration.owner.OwnerRegistrationObject;
 import com.effi.EffiApp.security.PrincipalInformation;
 import jakarta.transaction.Transactional;
@@ -82,6 +83,31 @@ public class UserServiceImpl implements UserService {
 
         //set user company, we create new company, since it is the first user for this company (owner/admin)
         user.setCompany(new Company(registrationObject.getCompanyName()));
+
+        userDao.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void save(EmployeeRegistrationObject employeeRegistrationObject) {
+        User user = new User();
+
+        //set field values for new user
+        user.setFirstName(employeeRegistrationObject.getFirstName());
+        user.setLastName(employeeRegistrationObject.getLastName());
+        user.setEmail(employeeRegistrationObject.getEmail());
+        user.setPassword(bCryptPasswordEncoder.encode(employeeRegistrationObject.getPassword()));
+        user.setCompany(employeeRegistrationObject.getCompany());
+
+        //give role based on selected (manager or normal employee)
+        if(employeeRegistrationObject.getRole().equals("MANAGER")){
+            user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_MANAGER"), roleDao.findRoleByName("ROLE_EMPLOYEE")));
+        } else if (employeeRegistrationObject.getRole().equals("NORMAL_EMPLOYEE")){
+            user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_EMPLOYEE")));
+        }
+
+        //add user to company
+        employeeRegistrationObject.getCompany().addUser(user);
 
         userDao.save(user);
     }
