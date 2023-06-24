@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -92,12 +93,20 @@ public class RegistrationController {
 
         //get the logged user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        PrincipalInformation loggedUser = (PrincipalInformation) authentication.getPrincipal();
+        Object loggedUser = authentication.getPrincipal();
+        PrincipalInformation principalInformation = null;
 
-        //set new employee's company to admins(owners) company
-        employeeRegistrationObject.setCompany(loggedUser.getCompany());
+        if (loggedUser instanceof UserDetails) {
+            principalInformation = ((PrincipalInformation)loggedUser);
+        } else {
+            String email = loggedUser.toString();
+            principalInformation = (PrincipalInformation) userService.loadUserByUsername(email);
+        }
 
-        //userService.save(employeeRegistrationObject);
+        //set new employee's company to admins(owners) company and add user to company
+        employeeRegistrationObject.setCompany(principalInformation.getCompany());
+
+        userService.save(employeeRegistrationObject);
 
         //todo: redirect the admin to new user info page
         return "redirect:/main-page";
