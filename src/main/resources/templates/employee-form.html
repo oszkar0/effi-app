@@ -25,6 +25,13 @@
       Email: <input type="email" th:field="*{email}"/>
     </p>
     <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</td>
+
+    <p>
+      <select th:field="*{role}">
+        <option value="MANAGER">manager</option>
+        <option value="NORMAL_EMPLOYEE">normal employee</option>
+      </select>
+    </p>
   </fieldset>
 
   <input type="submit" value="Add"/>

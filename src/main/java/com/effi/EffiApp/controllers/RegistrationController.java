@@ -97,7 +97,7 @@ public class RegistrationController {
         //set new employee's company to admins(owners) company
         employeeRegistrationObject.setCompany(loggedUser.getCompany());
 
-        userService.save(employeeRegistrationObject);
+        //userService.save(employeeRegistrationObject);
 
         //todo: redirect the admin to new user info page
         return "redirect:/main-page";

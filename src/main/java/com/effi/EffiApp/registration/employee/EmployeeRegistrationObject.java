@@ -16,19 +16,20 @@ public class EmployeeRegistrationObject {
     @NotBlank(message = "Email must not be empty")
     @Size(min = 1, max = 50, message = "Email size must be between 1 and 50")
     private String email;
-
+    private String role;
     private String password;
     private Company company;
 
     public EmployeeRegistrationObject() {
     }
 
-    public EmployeeRegistrationObject(String firstName, String lastName, String email, String password, Company company) {
+    public EmployeeRegistrationObject(String firstName, String lastName, String email, String password, Company company, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.company = company;
+        this.role = role;
     }
 
     public String getFirstName() {
@@ -69,5 +70,13 @@ public class EmployeeRegistrationObject {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
