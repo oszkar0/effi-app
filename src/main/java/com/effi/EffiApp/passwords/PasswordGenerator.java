@@ -13,7 +13,7 @@ public class PasswordGenerator {
 
         for(int i = 0; i < length; i++){
             int index = random.nextInt(CHARACTERS.length());
-            password.append(CHARACTERS.charAt(i));
+            password.append(CHARACTERS.charAt(index));
         }
 
         return password.toString();
