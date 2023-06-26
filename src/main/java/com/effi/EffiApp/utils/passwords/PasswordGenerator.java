@@ -1,4 +1,4 @@
-package com.effi.EffiApp.passwords;
+package com.effi.EffiApp.utils.passwords;
 
 import org.springframework.security.core.parameters.P;
 
