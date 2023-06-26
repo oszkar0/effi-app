@@ -1,23 +1,28 @@
 package com.effi.EffiApp.controllers;
 
-import com.effi.EffiApp.passwords.PasswordGenerator;
+import com.effi.EffiApp.utils.passwords.PasswordGenerator;
 import com.effi.EffiApp.registration.employee.EmployeeRegistrationObject;
 import com.effi.EffiApp.registration.owner.OwnerRegistrationObject;
 import com.effi.EffiApp.security.PrincipalInformation;
 import com.effi.EffiApp.service.UserService;
+import com.effi.EffiApp.utils.pdfs.PdfGeneration;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.awt.*;
+import java.io.ByteArrayInputStream;
 import java.util.logging.Logger;
 
 @Controller
@@ -72,7 +77,7 @@ public class RegistrationController {
     @PostMapping("/process-employee-registration")
     public String processEmployeeRegistration(
             @Valid @ModelAttribute("registrationObject") EmployeeRegistrationObject employeeRegistrationObject,
-            BindingResult bindingResult){
+            BindingResult bindingResult, RedirectAttributes redirectAttributes){
 
         logger.info("Processing user: " + employeeRegistrationObject.getEmail());
 
@@ -108,7 +113,29 @@ public class RegistrationController {
 
         userService.save(employeeRegistrationObject);
 
-        //todo: redirect the admin to new user info page
-        return "redirect:/main-page";
+        redirectAttributes.addFlashAttribute("employee", employeeRegistrationObject);
+        return "redirect:/register/new-employee-info";
+    }
+
+    @GetMapping("/new-employee-info")
+    public String getNewEmployeeInfo(Model model, @ModelAttribute("employee") EmployeeRegistrationObject employee){
+        model.addAttribute("employee", employee);
+
+        return "new-employee-info";
+    }
+
+    @PostMapping(value = "/create-PDF",  produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> getNewEmployeeInfoPdf(
+            @ModelAttribute("employee") EmployeeRegistrationObject employee){
+        ByteArrayInputStream bis = PdfGeneration.generateNewEmployeeAccountInfo(employee);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=new_employee.pdf");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
     }
 }
