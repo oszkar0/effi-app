@@ -2,6 +2,7 @@ package com.effi.EffiApp.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class Company {
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "company_id", fetch = FetchType.EAGER)
     private List<User> users;
 
 
@@ -51,6 +52,9 @@ public class Company {
     }
 
     public void addUser(User user){
+        if(users == null){
+            users = new ArrayList<>();
+        }
         users.add(user);
     }
 }
