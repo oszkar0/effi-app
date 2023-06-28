@@ -2,7 +2,9 @@ package com.effi.EffiApp.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -36,6 +38,11 @@ public class User {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "company_id")
     private Company company;
+
+    @OneToMany(mappedBy = "user_id",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Task> tasks;
 
     public User() {
     }
@@ -121,5 +128,20 @@ public class User {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public void addTask(Task task){
+        if(tasks == null){
+            tasks = new ArrayList<>();
+        }
+        tasks.add(task);
     }
 }
