@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.util.List;
@@ -42,6 +43,16 @@ public class MainController {
         model.addAttribute("users", companyUsers);
 
         return "main-page";
+    }
+
+    @GetMapping("/view-user-tasks")
+    public String getUserTasks(@RequestParam("userId") int userId, Model model){
+        User user = userService.findUserAndHisTasksById(userId);
+
+        model.addAttribute("user", user);
+        model.addAttribute("tasks", user.getTasks());
+
+        return "profile-tasks";
     }
 
 }

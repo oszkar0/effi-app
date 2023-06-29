@@ -38,6 +38,7 @@
       <td th:text="${user.email}"></td>
       <td>
         <a class="delete-link" th:href="@{/delete-user}" onclick="if (!confirm('Are you sure you want to delete this employee?')) return false">Delete</a>
+        <a  th:href="@{/view-user-tasks(userId=${user.id})}">View user's tasks</a>
       </td>
     </tr>
     </tbody>

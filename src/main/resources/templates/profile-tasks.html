@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Details</title>
+</head>
+<body>
+    <h2>Employee Details</h2>
+    <p>First Name: <span th:text="${user.firstName}"></span></p>
+    <p>Last Name: <span th:text="${user.lastName}"></span></p>
+    <p>Email: <span th:text="${user.email}"></span></p>
+
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.title}"></td>
+                <td th:text="${task.deadline}"></td>
+                <td th:text="${task.status}"></td>
+                <td>
+                    <a th:href="@{/task-details}">View task details</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/register/show-new-task-form}">Add new task</a>
+    </div>
+
+</body>
+</html>
