@@ -10,4 +10,5 @@ public interface UserService extends UserDetailsService {
     boolean userExists(String email);
     void save(OwnerRegistrationObject registrationObject);
     void save(EmployeeRegistrationObject employeeRegistrationObject);
+    User findUserAndHisTasksById(int id);
 }

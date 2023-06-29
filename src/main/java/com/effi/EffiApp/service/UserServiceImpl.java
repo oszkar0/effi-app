@@ -115,4 +115,9 @@ public class UserServiceImpl implements UserService {
 
         userDao.save(user);
     }
+
+    @Override
+    public User findUserAndHisTasksById(int id) {
+        return userDao.findUserAndHisTasksById(id);
+    }
 }
