@@ -49,4 +49,17 @@ public class UserDaoImpl implements UserDao{
     public void save(User user) {
         entityManager.merge(user);
     }
+
+    @Override
+    public User findUserAndHisTasksByEmail(String email) {
+        TypedQuery<User> query = entityManager.createQuery(
+                "select u from User u " +
+                    "JOIN FETCH u.tasks " +
+                    "where u.email =: email", User.class);
+        query.setParameter("email", email);
+
+        User user = query.getSingleResult();
+
+        return user;
+    }
 }
