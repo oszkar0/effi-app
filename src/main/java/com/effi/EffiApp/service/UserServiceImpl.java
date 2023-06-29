@@ -120,4 +120,10 @@ public class UserServiceImpl implements UserService {
     public User findUserAndHisTasksById(int id) {
         return userDao.findUserAndHisTasksById(id);
     }
+
+    @Override
+    @Transactional
+    public void save(User user) {
+        userDao.save(user);
+    }
 }
