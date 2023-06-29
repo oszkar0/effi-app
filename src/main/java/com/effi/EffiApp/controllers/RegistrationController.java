@@ -1,5 +1,8 @@
 package com.effi.EffiApp.controllers;
 
+import com.effi.EffiApp.entity.Task;
+import com.effi.EffiApp.entity.User;
+import com.effi.EffiApp.registration.task.TaskRegistrationObject;
 import com.effi.EffiApp.utils.passwords.PasswordGenerator;
 import com.effi.EffiApp.registration.employee.EmployeeRegistrationObject;
 import com.effi.EffiApp.registration.owner.OwnerRegistrationObject;
@@ -137,5 +140,47 @@ public class RegistrationController {
                 .headers(headers)
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(bis));
+    }
+
+    @GetMapping("/show-new-task-form")
+    public String showNewTaskForm(@RequestParam("userId") int userId, Model model){
+        TaskRegistrationObject task = new TaskRegistrationObject();
+        task.setUserId(userId);
+
+        model.addAttribute("task", task);
+
+        return "task-form";
+    }
+
+    @PostMapping("/process-new-task")
+    public String processNewTask(
+            @Valid @ModelAttribute("task") TaskRegistrationObject task,
+            BindingResult bindingResult){
+
+        logger.info("Processing task: " + task.getTitle());
+
+        //check if errors occurred, if occurred return filled form with error messages
+        if(bindingResult.hasErrors()){
+            return "task-form";
+        }
+
+        //retrieve the user
+        User user = userService.findUserAndHisTasksById(task.getUserId());
+
+        //create new task
+        Task newTask = new Task();
+        newTask.setTitle(task.getTitle());
+        newTask.setDescription(task.getDescription());
+        newTask.setDeadline(task.getDeadline());
+        newTask.setStatus(Task.TaskStatus.NOT_DONE);
+
+        //create connection user-task
+        newTask.setUser(user);
+        user.addTask(newTask);
+
+        //save
+        userService.save(user);
+
+        return "redirect:/view-user-tasks?userId=" + task.getUserId();
     }
 }

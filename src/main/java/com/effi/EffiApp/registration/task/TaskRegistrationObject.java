@@ -12,11 +12,11 @@ public class TaskRegistrationObject {
     private int userId;
     @NotNull
     @NotBlank(message = "User first name must not be empty")
-    @Size(min = 1, max = 50, message = "User first name size must be between 1 and 50")
+    @Size(min = 1, max = 150, message = "User first name size must be between 1 and 50")
     private String title;
     @NotNull
     @NotBlank(message = "User first name must not be empty")
-    @Size(min = 1, max = 50, message = "User first name size must be between 1 and 50")
+    @Size(min = 1, max = 500, message = "User first name size must be between 1 and 50")
     private String description;
     private Task.TaskStatus status;
     @NotNull
