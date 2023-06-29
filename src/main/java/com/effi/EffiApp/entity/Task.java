@@ -89,7 +89,7 @@ public class Task {
         this.user = user;
     }
 
-    enum TaskStatus {
+    public enum TaskStatus {
         DONE,
         NOT_DONE
     }
