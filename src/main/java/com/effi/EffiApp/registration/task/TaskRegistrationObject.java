@@ -11,12 +11,12 @@ import java.sql.Date;
 public class TaskRegistrationObject {
     private int userId;
     @NotNull
-    @NotBlank(message = "User first name must not be empty")
-    @Size(min = 1, max = 150, message = "User first name size must be between 1 and 50")
+    @NotBlank(message = "Title field not be empty")
+    @Size(min = 1, max = 150, message = "Title size must be between 1 and 50")
     private String title;
     @NotNull
-    @NotBlank(message = "User first name must not be empty")
-    @Size(min = 1, max = 500, message = "User first name size must be between 1 and 50")
+    @NotBlank(message = "Description field must not be empty")
+    @Size(min = 1, max = 500, message = "Description size must be between 1 and 50")
     private String description;
     private Task.TaskStatus status;
     @NotNull
