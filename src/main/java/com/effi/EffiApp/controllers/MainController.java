@@ -1,7 +1,9 @@
 package com.effi.EffiApp.controllers;
 
+import com.effi.EffiApp.entity.Task;
 import com.effi.EffiApp.entity.User;
 import com.effi.EffiApp.security.PrincipalInformation;
+import com.effi.EffiApp.service.TaskService;
 import com.effi.EffiApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -10,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -18,9 +21,11 @@ import java.util.List;
 @Controller
 public class MainController {
     private UserService userService;
+    private TaskService taskService;
     @Autowired
-    public MainController(UserService userService) {
+    public MainController(UserService userService, TaskService taskService) {
         this.userService = userService;
+        this.taskService = taskService;
     }
 
     @GetMapping("/main-page")
@@ -55,4 +60,13 @@ public class MainController {
         return "profile-tasks";
     }
 
+    @GetMapping("/task-details")
+    public String getTaskDetails(@RequestParam("taskId") int taskId, Model model) {
+        Task task = taskService.findTaskById(taskId);
+
+        model.addAttribute("task", task);
+        model.addAttribute("taskUpdated", task);
+
+        return "task-details";
+    }
 }

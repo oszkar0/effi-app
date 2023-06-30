@@ -27,7 +27,7 @@
                 <td th:text="${task.deadline}"></td>
                 <td th:text="${task.status}"></td>
                 <td>
-                    <a th:href="@{/task-details}">View task details</a>
+                    <a th:href="@{/task-details(taskId=${task.id})}">View task details</a>
                 </td>
             </tr>
             </tbody>
