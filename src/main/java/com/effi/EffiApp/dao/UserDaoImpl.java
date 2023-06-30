@@ -54,7 +54,7 @@ public class UserDaoImpl implements UserDao{
     public User findUserAndHisTasksById(int id) {
         TypedQuery<User> query = entityManager.createQuery(
                 "select u from User u " +
-                    "JOIN FETCH u.tasks " +
+                    "LEFT JOIN FETCH u.tasks " +
                     "where u.id =: id", User.class);
         query.setParameter("id", id);
 
