@@ -5,6 +5,7 @@ import com.effi.EffiApp.entity.User;
 import com.effi.EffiApp.security.PrincipalInformation;
 import com.effi.EffiApp.service.TaskService;
 import com.effi.EffiApp.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -68,5 +70,16 @@ public class MainController {
         model.addAttribute("taskUpdated", task);
 
         return "task-details";
+    }
+
+    @PostMapping("/task-update")
+    public String updateTask(@Valid @ModelAttribute("taskUpdated") Task taskUpdated){
+        Task task = taskService.findTaskById(taskUpdated.getId());
+
+        task.setDeadline(taskUpdated.getDeadline());
+        task.setStatus(taskUpdated.getStatus());
+
+        taskService.save(task);
+        return "redirect:/task-details?taskId=" + task.getId();
     }
 }

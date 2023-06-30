@@ -1,5 +1,6 @@
 package com.effi.EffiApp.entity;
 
+import com.effi.EffiApp.validators.deadline.DateNotBeforeToday;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -23,6 +24,7 @@ public class Task {
     private TaskStatus status;
 
     @Column(name = "deadline")
+    @DateNotBeforeToday
     private Date deadline;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
