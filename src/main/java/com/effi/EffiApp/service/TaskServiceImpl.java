@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TaskServiceImpl implements TaskService {
     TaskDao taskDao;
@@ -24,5 +26,10 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public void save(Task task) {
         taskDao.save(task);
+    }
+
+    @Override
+    public List<Task> findTaskByUserId(int userId) {
+        return taskDao.findTaskByUserId(userId);
     }
 }

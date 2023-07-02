@@ -2,8 +2,12 @@ package com.effi.EffiApp.dao;
 
 import com.effi.EffiApp.entity.Task;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class TaskDaoImpl implements TaskDao{
@@ -23,4 +27,16 @@ public class TaskDaoImpl implements TaskDao{
     public void save(Task task) {
         entityManager.merge(task);
     }
+
+    @Override
+    public List<Task> findTaskByUserId(int userId) {
+        TypedQuery<Task> query = entityManager.createQuery("SELECT t FROM Task t" +
+                "WHERE c.user.id =: userId", Task.class);
+
+        query.setParameter("userId", userId);
+
+        List<Task> tasks = query.getResultList();
+
+        return tasks;
+     }
 }
