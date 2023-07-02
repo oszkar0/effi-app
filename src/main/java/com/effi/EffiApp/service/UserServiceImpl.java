@@ -49,8 +49,9 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("Invalid username or password");
         }
 
-        return new PrincipalInformation(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()),
-                user.getFirstName(), user.getLastName(), user.getCompany());
+        return new PrincipalInformation(user.getId(), user.getEmail(), user.getPassword(),
+                mapRolesToAuthorities(user.getRoles()), user.getFirstName(), user.getLastName(),
+                user.getCompany());
     }
     //function to map roles to SimpleGrantedAuthority class (maps Role class to that class using stream)
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){

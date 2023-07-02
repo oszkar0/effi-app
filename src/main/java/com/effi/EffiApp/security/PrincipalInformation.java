@@ -8,16 +8,26 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 
 public class PrincipalInformation extends User {
+    private Long id;
     private String firstName;
     private String lastName;
     private Company company;
 
-    public PrincipalInformation(String username, String password, Collection<? extends GrantedAuthority> authorities,
+    public PrincipalInformation(Long id,String username, String password, Collection<? extends GrantedAuthority> authorities,
                                 String firstName, String lastName, Company company) {
         super(username, password, authorities);
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.company = company;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
