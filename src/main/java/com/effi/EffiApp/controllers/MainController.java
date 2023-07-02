@@ -50,12 +50,10 @@ public class MainController {
         PrincipalInformation principalInformation = getPrincipalInformation();
 
         if(principalInformation.getId() != userId &&
-                !principalInformation
-                        .getAuthorities()
-                        .contains(new SimpleGrantedAuthority(new String("ROLE_MANAGER")))){
+                !principalInformation.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_MANAGER"))){
             throw new AccessDeniedException("Access denied");
         }
-        
+
         User user = userService.findUserAndHisTasksById(userId);
 
         model.addAttribute("user", user);
@@ -66,6 +64,17 @@ public class MainController {
 
     @GetMapping("/task-details")
     public String getTaskDetails(@RequestParam("taskId") int taskId, Model model) {
+        PrincipalInformation principalInformation = getPrincipalInformation();
+
+        //check condition that normal employee can access only his tasks
+        if(!principalInformation.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_MANAGER"))
+            && !taskService.findTaskByUserId(principalInformation.getId().intValue())
+                .stream()
+                .map(task -> task.getId())
+                .anyMatch(id -> id.equals(taskId))){
+            throw new AccessDeniedException("Access denied");
+        }
+
         Task task = taskService.findTaskById(taskId);
 
         model.addAttribute("task", task);
