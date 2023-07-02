@@ -49,6 +49,13 @@ public class MainController {
     public String getUserTasks(@RequestParam("userId") int userId, Model model){
         PrincipalInformation principalInformation = getPrincipalInformation();
 
+        if(principalInformation.getId() != userId &&
+                !principalInformation
+                        .getAuthorities()
+                        .contains(new SimpleGrantedAuthority(new String("ROLE_MANAGER")))){
+            throw new AccessDeniedException("Access denied");
+        }
+        
         User user = userService.findUserAndHisTasksById(userId);
 
         model.addAttribute("user", user);
