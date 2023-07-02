@@ -30,8 +30,8 @@ public class TaskDaoImpl implements TaskDao{
 
     @Override
     public List<Task> findTaskByUserId(int userId) {
-        TypedQuery<Task> query = entityManager.createQuery("SELECT t FROM Task t" +
-                "WHERE c.user.id =: userId", Task.class);
+        TypedQuery<Task> query = entityManager.createQuery("SELECT t FROM Task t " +
+                "WHERE t.user.id =: userId", Task.class);
 
         query.setParameter("userId", userId);
 
