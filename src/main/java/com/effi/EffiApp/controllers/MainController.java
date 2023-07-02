@@ -92,4 +92,9 @@ public class MainController {
 
         return principalInformation;
     }
+
+    @GetMapping("/access-denied")
+    public String getAccessDeniedPage(){
+        return "access-denied";
+    }
 }
