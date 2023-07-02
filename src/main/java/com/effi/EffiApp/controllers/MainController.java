@@ -7,7 +7,9 @@ import com.effi.EffiApp.service.TaskService;
 import com.effi.EffiApp.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -32,17 +34,8 @@ public class MainController {
 
     @GetMapping("/main-page")
     public String getMainPage(Model model){
-        //get the logged user
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object loggedUser = authentication.getPrincipal();
-        PrincipalInformation principalInformation = null;
-
-        if (loggedUser instanceof UserDetails) {
-            principalInformation = ((PrincipalInformation)loggedUser);
-        } else {
-            String email = loggedUser.toString();
-            principalInformation = (PrincipalInformation) userService.loadUserByUsername(email);
-        }
+        //get logged user
+        PrincipalInformation principalInformation = getPrincipalInformation();
 
         //get all users from logged users company 
         List<User> companyUsers = principalInformation.getCompany().getUsers();
@@ -54,6 +47,8 @@ public class MainController {
 
     @GetMapping("/view-user-tasks")
     public String getUserTasks(@RequestParam("userId") int userId, Model model){
+        PrincipalInformation principalInformation = getPrincipalInformation();
+
         User user = userService.findUserAndHisTasksById(userId);
 
         model.addAttribute("user", user);
@@ -81,5 +76,20 @@ public class MainController {
 
         taskService.save(task);
         return "redirect:/task-details?taskId=" + task.getId();
+    }
+
+    private PrincipalInformation getPrincipalInformation(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object loggedUser = authentication.getPrincipal();
+        PrincipalInformation principalInformation = null;
+
+        if (loggedUser instanceof UserDetails) {
+            principalInformation = ((PrincipalInformation)loggedUser);
+        } else {
+            String email = loggedUser.toString();
+            principalInformation = (PrincipalInformation) userService.loadUserByUsername(email);
+        }
+
+        return principalInformation;
     }
 }
