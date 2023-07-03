@@ -3,6 +3,7 @@ package com.effi.EffiApp.controllers;
 import com.effi.EffiApp.entity.Task;
 import com.effi.EffiApp.entity.User;
 import com.effi.EffiApp.security.PrincipalInformation;
+import com.effi.EffiApp.service.CompanyService;
 import com.effi.EffiApp.service.TaskService;
 import com.effi.EffiApp.service.UserService;
 import jakarta.validation.Valid;
@@ -26,10 +27,12 @@ import java.util.List;
 public class MainController {
     private UserService userService;
     private TaskService taskService;
+    private CompanyService companyService;
     @Autowired
-    public MainController(UserService userService, TaskService taskService) {
+    public MainController(UserService userService, TaskService taskService, CompanyService companyService) {
         this.userService = userService;
         this.taskService = taskService;
+        this.companyService = companyService;
     }
 
     @GetMapping("/main-page")
@@ -38,7 +41,7 @@ public class MainController {
         PrincipalInformation principalInformation = getPrincipalInformation();
 
         //get all users from logged users company 
-        List<User> companyUsers = principalInformation.getCompany().getUsers();
+        List<User> companyUsers = companyService.findCompanyById(principalInformation.getCompany().getId()).getUsers();
 
         model.addAttribute("users", companyUsers);
 
