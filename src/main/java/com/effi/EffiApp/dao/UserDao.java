@@ -7,4 +7,5 @@ public interface UserDao {
     boolean userExists(String email);
     void save(User user);
     User findUserAndHisTasksById(int id);
+    void deleteUserById(int id);
 }
