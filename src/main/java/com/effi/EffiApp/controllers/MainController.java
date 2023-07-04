@@ -4,6 +4,7 @@ import com.effi.EffiApp.entity.Task;
 import com.effi.EffiApp.entity.User;
 import com.effi.EffiApp.security.PrincipalInformation;
 import com.effi.EffiApp.service.CompanyService;
+import com.effi.EffiApp.service.RoleService;
 import com.effi.EffiApp.service.TaskService;
 import com.effi.EffiApp.service.UserService;
 import jakarta.validation.Valid;
@@ -28,11 +29,14 @@ public class MainController {
     private UserService userService;
     private TaskService taskService;
     private CompanyService companyService;
+    private RoleService roleService;
     @Autowired
-    public MainController(UserService userService, TaskService taskService, CompanyService companyService) {
+    public MainController(UserService userService, TaskService taskService, CompanyService companyService,
+                          RoleService roleService) {
         this.userService = userService;
         this.taskService = taskService;
         this.companyService = companyService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/main-page")
@@ -115,5 +119,19 @@ public class MainController {
     @GetMapping("/access-denied")
     public String getAccessDeniedPage(){
         return "access-denied";
+    }
+
+    @GetMapping("/delete-user")
+    public String deleteUser(@RequestParam("userId") int userId){
+        User user = userService.findUserById(userId);
+
+        //check if we aredeleting company owner
+        if(user.getRoles().contains(roleService.findRoleByName("ROLE_ADMIN"))){
+            throw new RuntimeException("Can not delete company owner");
+        }
+
+        userService.deleteUserById(userId);
+
+        return "redirect:/main-page";
     }
 }
