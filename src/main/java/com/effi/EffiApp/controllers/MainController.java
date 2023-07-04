@@ -73,14 +73,7 @@ public class MainController {
     public String getTaskDetails(@RequestParam("taskId") int taskId, Model model) {
         PrincipalInformation principalInformation = getPrincipalInformation();
 
-        //check condition that normal employee can access only his tasks
-        if(!principalInformation.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_MANAGER"))
-            && !taskService.findTaskByUserId(principalInformation.getId().intValue())
-                .stream()
-                .map(task -> task.getId())
-                .anyMatch(id -> id.equals(taskId))){
-            throw new AccessDeniedException("Access denied");
-        }
+        checkNormalEmployeeAccessingHisTask(principalInformation, taskId);
 
         Task task = taskService.findTaskById(taskId);
 
@@ -133,5 +126,28 @@ public class MainController {
         userService.deleteUserById(userId);
 
         return "redirect:/main-page";
+    }
+
+    @GetMapping("/delete-task")
+    public String deleteTask(@RequestParam("taskId") int taskId){
+        PrincipalInformation principalInformation = getPrincipalInformation();
+
+        checkNormalEmployeeAccessingHisTask(principalInformation, taskId);
+
+        taskService.deleteTaskById(taskId);
+
+        return "redirect:/main-page";
+    }
+
+    private void checkNormalEmployeeAccessingHisTask(PrincipalInformation principalInformation,int taskId)
+            throws AccessDeniedException{
+        //check condition that normal employee can access only his tasks
+        if(!principalInformation.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_MANAGER"))
+                && !taskService.findTaskByUserId(principalInformation.getId().intValue())
+                .stream()
+                .map(task -> task.getId())
+                .anyMatch(id -> id.equals(taskId))){
+            throw new AccessDeniedException("Access denied");
+        }
     }
 }
