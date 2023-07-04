@@ -32,4 +32,10 @@ public class TaskServiceImpl implements TaskService {
     public List<Task> findTaskByUserId(int userId) {
         return taskDao.findTaskByUserId(userId);
     }
+
+    @Override
+    @Transactional
+    public void deleteTaskById(int id) {
+        taskDao.deleteTaskById(id);
+    }
 }

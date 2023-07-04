@@ -8,4 +8,5 @@ public interface TaskService {
     Task findTaskById(int id);
     void save(Task task);
     List<Task> findTaskByUserId(int userId);
+    void deleteTaskById(int id);
 }

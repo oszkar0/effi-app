@@ -39,4 +39,11 @@ public class TaskDaoImpl implements TaskDao{
 
         return tasks;
      }
+
+    @Override
+    public void deleteTaskById(int id) {
+        Task taskToDelete = findTaskById(id);
+
+        entityManager.remove(taskToDelete);
+    }
 }
