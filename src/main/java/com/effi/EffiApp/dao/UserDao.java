@@ -8,4 +8,5 @@ public interface UserDao {
     void save(User user);
     User findUserAndHisTasksById(int id);
     void deleteUserById(int id);
+    User findUserById(int id);
 }

@@ -13,4 +13,5 @@ public interface UserService extends UserDetailsService {
     User findUserAndHisTasksById(int id);
     void save(User user);
     void deleteUserById(int id);
+    User findUserById(int id);
 }

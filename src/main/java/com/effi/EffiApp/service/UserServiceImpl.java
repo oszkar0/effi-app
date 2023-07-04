@@ -133,4 +133,9 @@ public class UserServiceImpl implements UserService {
     public void deleteUserById(int id) {
         userDao.deleteUserById(id);
     }
+
+    @Override
+    public User findUserById(int id) {
+        return userDao.findUserById(id);
+    }
 }
