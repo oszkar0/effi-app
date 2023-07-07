@@ -134,9 +134,12 @@ public class MainController {
 
         checkNormalEmployeeAccessingHisTask(principalInformation, taskId);
 
+        //find user id to redirect to users tasks
+        Long userId = taskService.findTaskById(taskId).getUser().getId();
+
         taskService.deleteTaskById(taskId);
 
-        return "redirect:/main-page";
+        return "redirect:/view-user-tasks?userId=" + userId;
     }
 
     private void checkNormalEmployeeAccessingHisTask(PrincipalInformation principalInformation,int taskId)
