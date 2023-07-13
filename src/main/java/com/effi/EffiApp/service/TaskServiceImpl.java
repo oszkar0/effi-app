@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -37,5 +38,10 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public void deleteTaskById(int id) {
         taskDao.deleteTaskById(id);
+    }
+
+    @Override
+    public List<Task> findTaskByUserIdAndDeadline(int userId, Date deadline) {
+        return taskDao.findTaskByUserIdAndDeadline(userId, deadline);
     }
 }

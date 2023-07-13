@@ -7,6 +7,7 @@ import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -45,5 +46,18 @@ public class TaskDaoImpl implements TaskDao{
         Task taskToDelete = findTaskById(id);
 
         entityManager.remove(taskToDelete);
+    }
+
+    @Override
+    public List<Task> findTaskByUserIdAndDeadline(int userId, java.util.Date deadline) {
+        TypedQuery<Task> query = entityManager.createQuery("SELECT t FROM Task t " +
+                "WHERE t.user.id =: userId AND t.deadline =: deadline", Task.class);
+
+        query.setParameter("userId", userId);
+        query.setParameter("deadline",new java.sql.Date(deadline.getTime()));
+
+        List<Task> tasks = query.getResultList();
+
+        return tasks;
     }
 }
