@@ -42,18 +42,18 @@ public class MainController {
         this.roleService = roleService;
     }
 
-//    @GetMapping("/main-page")
-//    public String getMainPage(Model model){
-//        //get logged user
-//        PrincipalInformation principalInformation = getPrincipalInformation();
-//
-//        //get all users from logged users company
-//        List<User> companyUsers = companyService.findCompanyById(principalInformation.getCompany().getId()).getUsers();
-//
-//        model.addAttribute("users", companyUsers);
-//
-//        return "main-page";
-//    }
+    @GetMapping("/employees-list")
+    public String getMainPage(Model model){
+        //get logged user
+        PrincipalInformation principalInformation = getPrincipalInformation();
+
+        //get all users from logged users company
+        List<User> companyUsers = companyService.findCompanyById(principalInformation.getCompany().getId()).getUsers();
+
+        model.addAttribute("users", companyUsers);
+
+        return "employees-list-page";
+    }
 
     @GetMapping("/view-user-tasks")
     public String getUserTasks(@RequestParam("userId") int userId, Model model){
