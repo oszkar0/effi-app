@@ -69,7 +69,7 @@ public class MainController {
         model.addAttribute("user", user);
         model.addAttribute("tasks", user.getTasks());
 
-        return "profile-tasks";
+        return "users-tasks-page";
     }
 
     @GetMapping("/task-details")
