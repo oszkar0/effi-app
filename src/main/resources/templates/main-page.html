@@ -17,7 +17,7 @@
         <li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a th:href="@{/my-profile}">My profile</a></li>
       </ul>
     </nav>
-    <a classs="cta" th:href="/logout"><button>Logout</button></a>
+    <a classs="cta" th:href="@{/logout}"><button>Logout</button></a>
   </header>
 
   <div sec:authorize="hasRole('ROLE_EMPLOYEE')">
