@@ -2,50 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymleaf.org/extras.spring-security">
 <head>
-  <meta charset="UTF-8">
-  <title>Effi app main page</title>
-  <link rel="stylesheet" th:href="@{/css/main-page-css.css}"/>
+    <meta charset="UTF-8">
+    <title>Effi main page</title>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table-styles.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
 <body>
-<div class="navbar">
-  <div class="logo-left-div">
-    <h1 class="logo" >Effi:</h1>
-    <span class="logo" sec:authentication="principal.company.name"></span>
+  <header>
+    <img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/>
+    <nav>
+      <ul class="nav_links">
+        <li sec:authorize="hasRole('ROLE_MANAGER')"><a th:href="@{/employees-list}">Employees list</a></li>
+        <li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a th:href="@{/my-profile}">My profile</a></li>
+      </ul>
+    </nav>
+    <a classs="cta" th:href="/logout"><button>Logout</button></a>
+  </header>
+
+  <div sec:authorize="hasRole('ROLE_EMPLOYEE')">
+      <label>Your tasks for today: </label>
+      <table class="table-style">
+          <thead>
+          <tr>
+              <th>Task</th>
+              <th>Status</th>
+              <th>Actions</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr th:each="task : ${tasks}">
+              <td th:text="${task.title}"></td>
+              <td th:text="${task.status}"></td>
+              <td>
+                 <div class="centered"> <a classs="cta" th:href="@{/task-details(taskId=${task.id})}"><button>Details</button></a> </div>
+              </td>
+          </tr>
+          </tbody>
+      </table>
   </div>
-  <div class="logo-right-div">
-    <span class="account-info" sec:authentication="principal.username"></span>
-    <form action="#" th:action="@{/logout}" method="POST">
-      <input  class="logout-button" type="submit" value="Logout">
-    </form>
-  </div>
-</div>
-
-<div  sec:authorize="hasRole('ROLE_ADMIN')">
-  <table class="user-table">
-    <thead>
-    <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Email</th>
-      <th>Action</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <tr th:each="user : ${users}">
-      <td th:text="${user.firstName}"></td>
-      <td th:text="${user.lastName}"></td>
-      <td th:text="${user.email}"></td>
-      <td>
-        <a class="delete-link" th:href="@{/delete-user(userId=${user.id})}" onclick="if (!confirm('Are you sure you want to delete this employee?')) return false">Delete</a>
-        <a  th:href="@{/view-user-tasks(userId=${user.id})}">View user's tasks</a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-
-  <a class="add-link" th:href="@{/register/show-employee-registration-form}">Add</a>
-</div>
-
 </body>
 </html>

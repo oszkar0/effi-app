@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 @Controller
@@ -39,18 +42,18 @@ public class MainController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/main-page")
-    public String getMainPage(Model model){
-        //get logged user
-        PrincipalInformation principalInformation = getPrincipalInformation();
-
-        //get all users from logged users company 
-        List<User> companyUsers = companyService.findCompanyById(principalInformation.getCompany().getId()).getUsers();
-
-        model.addAttribute("users", companyUsers);
-
-        return "main-page";
-    }
+//    @GetMapping("/main-page")
+//    public String getMainPage(Model model){
+//        //get logged user
+//        PrincipalInformation principalInformation = getPrincipalInformation();
+//
+//        //get all users from logged users company
+//        List<User> companyUsers = companyService.findCompanyById(principalInformation.getCompany().getId()).getUsers();
+//
+//        model.addAttribute("users", companyUsers);
+//
+//        return "main-page";
+//    }
 
     @GetMapping("/view-user-tasks")
     public String getUserTasks(@RequestParam("userId") int userId, Model model){
@@ -152,5 +155,24 @@ public class MainController {
                 .anyMatch(id -> id.equals(taskId))){
             throw new AccessDeniedException("Access denied");
         }
+    }
+
+    @GetMapping("/main-page")
+    public String getTmpMain(Model model){
+        PrincipalInformation principalInformation = getPrincipalInformation();
+
+        List<Task> todaysTasks = taskService.findTaskByUserIdAndDeadline(principalInformation.getId().intValue(),
+                Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
+        model.addAttribute("tasks", todaysTasks);
+
+        return "main-page";
+    }
+
+    @GetMapping("/my-profile")
+    public String redirectToUsersTasks(){
+        PrincipalInformation principalInformation = getPrincipalInformation();
+
+        return "redirect:/view-user-tasks?userId=" + principalInformation.getId();
     }
 }
