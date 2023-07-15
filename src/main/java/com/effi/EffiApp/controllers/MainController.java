@@ -100,14 +100,17 @@ public class MainController {
     private PrincipalInformation getPrincipalInformation(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object loggedUser = authentication.getPrincipal();
+
+        String email = null;
         PrincipalInformation principalInformation = null;
 
         if (loggedUser instanceof UserDetails) {
-            principalInformation = ((PrincipalInformation)loggedUser);
+            email = ((PrincipalInformation)loggedUser).getUsername();
         } else {
-            String email = loggedUser.toString();
-            principalInformation = (PrincipalInformation) userService.loadUserByUsername(email);
+            email = loggedUser.toString();
         }
+
+        principalInformation = (PrincipalInformation) userService.loadUserByUsername(email);
 
         return principalInformation;
     }
