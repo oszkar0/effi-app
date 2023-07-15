@@ -22,7 +22,7 @@ CREATE TABLE `users` (
     `first_name` varchar(50) NOT NULL,
 	`last_name` varchar(50) NOT NULL,
 	`email` varchar(50) NOT NULL,
-    `password` varchar(68) NOT NULL,
+    `password` varchar(60) NOT NULL,
 	`enabled` tinyint NOT NULL,
     `company_id` int NOT NULL,
 	
@@ -79,22 +79,5 @@ INSERT INTO `role` (name)
 VALUES 
 ('ROLE_EMPLOYEE'),('ROLE_MANAGER'),('ROLE_ADMIN');
 
--- insert sample company
-INSERT INTO `company` (name)
-VALUES
-('cimplycompy');
-
--- sample user
-INSERT INTO `users` (`first_name`,`last_name`,`email`,`password`,`enabled`, `company_id`)
-VALUES 
-('Oskar', 'Szysiak', 'oszy@kk.com','$2a$10$SkLh0oY9nP/1ibCnhqb2GuFG0v0MokaAxOGW1QHjoyXwu9WGHAdwi',1, 1);
-
-INSERT INTO `users` (`first_name`,`last_name`,`email`,`password`,`enabled`, `company_id`)
-VALUES 
-('Patryk', 'Luski', 'palu@kk.com','$2a$10$SkLh0oY9nP/1ibCnhqb2GuFG0v0MokaAxOGW1QHjoyXwu9WGHAdwi',1, 1);
-
-INSERT INTO `users_roles` (user_id,role_id)
-VALUES 
-(1, 3);
 
 
