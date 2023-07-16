@@ -3,33 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>EffiApp Login Page</title>
-    <style>
-        .failed{
-            color: red;
-        }
-    </style>
-
+    <link rel="stylesheet" th:href="@{/css/login-form.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
 <body>
-<h3>EffiApp Login Page</h3>
+<header>
+    <img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/>
+</header>
 
-<form action="#" th:action="@{/process-login}" method="POST">
-    <!-- Check for login error -->
-    <div th:if="${param.error}">
-        <i class="failed" >Sorry! You entered invalid username/password</i>
+<div class="container">
+    <h3>EffiApp Login Page</h3>
+
+    <form action="#" th:action="@{/process-login}" method="POST">
+        <!-- Check for login error -->
+        <div th:if="${param.error}">
+            <i class="failed">Sorry! You entered invalid username/password</i>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" class="form-input" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" class="form-input" required/>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Login" class="btn-primary"/>
+        </div>
+    </form>
+
+    <div class="register-link">
+        <a th:href="@{/register/show-registration-form}">Register company (and owner)</a>
     </div>
+</div>
 
-
-    <p>
-        Email: <input type="text" name="email"/>
-    </p>
-
-    <p>
-        Password <input type="password" name="password"/>
-    </p>
-
-  <input type="submit" value="Login"/>
-</form>
-    <a th:href="@{/register/show-registration-form}">Register company(and owner)</a>
 </body>
 </html>

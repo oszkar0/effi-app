@@ -1,0 +1,74 @@
+body {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  background-color: #242522;
+  color: #edf0f1;
+}
+
+.container {
+  width: 400px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: #001f3f;
+  border-radius: 10px;
+}
+
+.container h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.container label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.container input[type="text"],
+.container input[type="password"],
+.container input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: none;
+  box-sizing: border-box; /* Added */
+}
+
+.container select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: none;
+  box-sizing: border-box; /* Added */
+}
+
+.container input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #0088a9;
+  border: none;
+  border-radius: 5px;
+  color: #edf0f1;
+  cursor: pointer;
+}
+
+.container input[type="submit"]:hover {
+  background-color: #005f76;
+}
+
+.container .failed {
+  display: block;
+  text-align: center;
+  color: red;
+  margin-bottom: 10px;
+}
+
+.container .back-link {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  color: #0088a9;
+  text-decoration: none;
+}

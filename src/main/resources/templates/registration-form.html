@@ -3,45 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Company Registration Form</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/css/registration-form.css}"/>
 </head>
 <body>
-<h3>Company Registration Form</h3>
+<header>
+    <img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/>
+</header>
 
-<form action="#" th:action="@{/register/process-registration}" th:object="${registrationObject}" method="POST">
-    <fieldset>
-        <legend>Company</legend>
-        <p>
-            Company name: <input type="text" name="companyName" th:field="*{companyName}"/>
-        </p>
-        <td th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">Company name error</td>
-    </fieldset>
+<div class="container">
+    <h3>Company Registration Form</h3>
 
-    <fieldset>
-        <legend>User</legend>
+    <form action="#" th:action="@{/register/process-registration}" th:object="${registrationObject}" method="POST">
+        <fieldset>
+            <legend>Company</legend>
+            <div class="form-group">
+                <label for="companyName">Company name:</label>
+                <input type="text" id="companyName" name="companyName" class="form-input" th:field="*{companyName}" required/>
+            </div>
+            <div class="error" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}"></div>
+        </fieldset>
 
-        <p>
-            First name: <input type="text" th:field="*{userFirstName}"/>
-        </p>
-        <td th:if="${#fields.hasErrors('userFirstName')}" th:errors="*{userFirstName}">First name error</td>
+        <fieldset>
+            <legend>User</legend>
 
-        <p>
-            Last name: <input type="text" th:field="*{userLastName}"/>
-        </p>
-        <td th:if="${#fields.hasErrors('userLastName')}" th:errors="*{userLastName}">Last name error</td>
+            <div class="form-group">
+                <label for="userFirstName">First name:</label>
+                <input type="text" id="userFirstName" name="userFirstName" class="form-input" th:field="*{userFirstName}" required/>
+            </div>
+            <div class="error" th:if="${#fields.hasErrors('userFirstName')}" th:errors="*{userFirstName}"></div>
 
-        <p>
-            Email: <input type="email" th:field="*{userEmail}"/>
-        </p>
-        <td th:if="${#fields.hasErrors('userEmail')}" th:errors="*{userEmail}">Email error</td>
+            <div class="form-group">
+                <label for="userLastName">Last name:</label>
+                <input type="text" id="userLastName" name="userLastName" class="form-input" th:field="*{userLastName}" required/>
+            </div>
+            <div class="error" th:if="${#fields.hasErrors('userLastName')}" th:errors="*{userLastName}"></div>
 
-        <p>
-            Password: <input type="password" th:field="*{userPassword}"/>
-        </p>
-        <td th:if="${#fields.hasErrors('userPassword')}" th:errors="*{userPassword}">Password error</td>
-    </fieldset>
+            <div class="form-group">
+                <label for="userEmail">Email:</label>
+                <input type="email" id="userEmail" name="userEmail" class="form-input" th:field="*{userEmail}" required/>
+            </div>
+            <div class="error" th:if="${#fields.hasErrors('userEmail')}" th:errors="*{userEmail}"></div>
 
-    <input type="submit" value="Register"/>
-</form>
+            <div class="form-group">
+                <label for="userPassword">Password:</label>
+                <input type="password" id="userPassword" name="userPassword" class="form-input" th:field="*{userPassword}" required/>
+            </div>
+            <div class="error" th:if="${#fields.hasErrors('userPassword')}" th:errors="*{userPassword}"></div>
+        </fieldset>
+
+        <div class="form-group">
+            <input type="submit" value="Register" class="btn-primary"/>
+        </div>
+    </form>
+</div>
 
 </body>
 </html>

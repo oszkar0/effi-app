@@ -32,6 +32,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(configurer -> configurer
                         .requestMatchers("/").hasRole("EMPLOYEE") //config endpoints permisions
                         .requestMatchers("/register/**").permitAll()
+                        .requestMatchers("/logo/**").permitAll()
+                        .requestMatchers("/css/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")

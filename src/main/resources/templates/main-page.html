@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymleaf.org/extras.spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymleaf.org/extras.spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Effi main page</title>
@@ -9,38 +8,41 @@
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
 <body>
-  <header>
-    <img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/>
+<header>
+    <a th:href="@{/main-page}"><img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/></a>
+
     <nav>
-      <ul class="nav_links">
-        <li sec:authorize="hasRole('ROLE_MANAGER')"><a th:href="@{/employees-list}">Employees list</a></li>
-        <li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a th:href="@{/my-profile}">My profile</a></li>
-      </ul>
+        <ul class="nav_links">
+            <li sec:authorize="hasRole('ROLE_MANAGER')"><a th:href="@{/employees-list}">Employees list</a></li>
+            <li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a th:href="@{/my-profile}">My profile</a></li>
+        </ul>
     </nav>
-    <a classs="cta" th:href="@{/logout}"><button>Logout</button></a>
-  </header>
+    <form action="#" th:action="@{/logout}" method="POST">
+        <input class="cta" type="submit" value="Logout">
+    </form>
+</header>
 
-  <div sec:authorize="hasRole('ROLE_EMPLOYEE')">
-      <label>Your tasks for today: </label>
-      <table class="table-style">
-          <thead>
-          <tr>
-              <th>Task</th>
-              <th>Status</th>
-              <th>Actions</th>
-          </tr>
-          </thead>
+<div sec:authorize="hasRole('ROLE_EMPLOYEE')">
+    <label>Your tasks for today: </label>
+    <table class="table-style">
+        <thead>
+        <tr>
+            <th>Task</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
 
-          <tbody>
-          <tr th:each="task : ${tasks}">
-              <td th:text="${task.title}"></td>
-              <td th:text="${task.status}"></td>
-              <td>
-                 <div class="centered"> <a classs="cta" th:href="@{/task-details(taskId=${task.id})}"><button>Details</button></a> </div>
-              </td>
-          </tr>
-          </tbody>
-      </table>
-  </div>
+        <tbody>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.title}"></td>
+            <td th:text="${task.status}"></td>
+            <td>
+                <div class="centered"><a classs="cta" th:href="@{/task-details(taskId=${task.id})}"><button>Details</button></a></div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

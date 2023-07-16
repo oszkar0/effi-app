@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
 * {
     box-sizing: border-box;
@@ -7,7 +6,7 @@
     background-color: #242522
 }
 
-li, a, button {
+li, a, button, input[type="submit"] {
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
     font-size: 16px;
@@ -43,15 +42,15 @@ header {
     color: #0088a9;
 }
 
-button {
+button, input[type="submit"] {
     padding: 9px 25px;
     background-color: rgba(0, 136, 169, 1);
-    border: none
+    border: none;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease 0s;
 }
 
-button: hover {
+button:hover, input[type="submit"]:hover {
     background-color: rgba(0, 136, 169, 0.8);
 }

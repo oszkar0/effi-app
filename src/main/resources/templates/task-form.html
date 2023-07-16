@@ -3,25 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <title>Create Task</title>
+  <link rel="stylesheet" th:href="@{/css/registration-form.css}"/>
 </head>
 <body>
-<h2>Create Task</h2>
-<form action="#" th:action="@{/register/process-new-task}" th:object="${task}" method="POST">
-  <input type="hidden" th:field="*{userId}"/>
+<header>
+  <a th:href="@{/main-page}"><img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/></a>
+</header>
 
-  <label >Title:</label>
-  <input type="text" th:field="*{title}"><br><br>
-  <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</td>
+<div class="container">
+  <h3>Create Task</h3>
+  <form action="#" th:action="@{/register/process-new-task}" th:object="${task}" method="POST">
+    <input type="hidden" th:field="*{userId}"/>
 
-  <label>Description:</label>
-  <textarea id="description" th:field="*{description}"></textarea><br><br>
-  <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description error</td>
+    <div class="form-group">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" class="form-input" th:field="*{title}" required/>
+    </div>
+    <div class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
 
-  <label>Deadline:</label>
-  <input type="date" th:field="*{deadline}"><br><br>
-  <td th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}">Deadline</td>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" class="form-input" th:field="*{description}" required></textarea>
+    </div>
+    <div class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
 
-  <input type="submit" value="Create">
-</form>
+    <div class="form-group">
+      <label for="deadline">Deadline:</label>
+      <input type="date" id="deadline" name="deadline" class="form-input" th:field="*{deadline}" required/>
+    </div>
+    <div class="error" th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}"></div>
+
+    <div class="form-group">
+      <input type="submit" value="Create" class="btn-primary"/>
+    </div>
+  </form>
+</div>
 </body>
 </html>

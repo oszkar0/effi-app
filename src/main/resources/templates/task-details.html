@@ -3,28 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <title>Task details</title>
+  <link rel="stylesheet" th:href="@{/css/task-details.css}"/>
 </head>
 <body>
-<h2>Task details</h2>
+<header>
+  <a th:href="@{/main-page}"><img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/></a>
+</header>
+<div class="container">
+  <h2>Task details</h2>
 
-<p>Title: <span th:text="${task.title}"></span></p>
-<p>Description: <span th:text="${task.description}"></span></p>
+  <p>Title: <span th:text="${task.title}"></span></p>
+  <p>Description: <span th:text="${task.description}"></span></p>
 
-<form action="#" th:action="@{/task-update}" th:object="${taskUpdated}" method="POST">
-  <input hidden="hidden" th:field="*{id}">
+  <form action="#" th:action="@{/task-update}" th:object="${taskUpdated}" method="POST">
+    <input hidden="hidden" th:field="*{id}">
 
-  <label>Deadline:</label>
-  <input type="date" th:field="*{deadline}"><br><br>
-  <td th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}">Deadline</td>
+    <label>Deadline:</label>
+    <input class="form-field" type="date" th:field="*{deadline}"><br><br>
+    <td th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}">Deadline</td>
 
-  <label>Status:</label>
-  <select th:field="*{status}">
-    <option value="DONE">Done</option>
-    <option value="NOT_DONE">Not Done</option>
-  </select><br><br>
+    <label>Status:</label>
+    <select class="form-field" th:field="*{status}">
+      <option value="DONE">Done</option>
+      <option value="NOT_DONE">Not Done</option>
+    </select><br><br>
 
-  <input type="submit" value="Update">
-</form>
-<a th:href="@{/delete-task(taskId=${task.id})}">Delete</a>
+    <input class="submit-button" type="submit" value="Update">
+  </form>
+  <a class="delete-link" th:href="@{/delete-task(taskId=${task.id})}">Delete</a>
+</div>
 </body>
 </html>

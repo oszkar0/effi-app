@@ -2,33 +2,36 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>New Employee Info</title>
+    <link rel="stylesheet" th:href="@{/css/new-employee-info.css}"/>
 </head>
 <body>
-<h1>New Employee Info</h1>
+<div class="container">
+    <h1>New Employee Info</h1>
 
-<form action="#" th:action="@{/register/create-PDF}" th:object="${employee}" method="POST">
+    <form action="#" th:action="@{/register/create-PDF}" th:object="${employee}" method="POST">
 
-    <div>
-        <label>First Name:</label>
-        <input th:field="*{firstName}" readonly/>
-    </div>
+        <div>
+            <label>First Name:</label>
+            <input class="form-field" th:field="*{firstName}" readonly/>
+        </div>
 
-    <div>
-        <label>Last Name:</label>
-        <input th:field="*{lastName}" readonly>
-    </div>
+        <div>
+            <label>Last Name:</label>
+            <input class="form-field" th:field="*{lastName}" readonly>
+        </div>
 
-    <div>
-        <label>Email:</label>
-        <input th:field="*{email}" readonly/>
-    </div>
+        <div>
+            <label>Email:</label>
+            <input class="form-field" th:field="*{email}" readonly/>
+        </div>
 
-    <div>
-        <label>Password:</label>
-        <input th:field="*{password}" readonly/>
-    </div>
-    <button type="submit">Create PDF</button>
-    <a th:href="@{/main-page}">Back to main page</a>
-</form>
+        <div>
+            <label>Password:</label>
+            <input class="form-field" th:field="*{password}" readonly/>
+        </div>
+        <button class="submit-button" type="submit">Create PDF</button>
+        <a class="back-link" th:href="@{/main-page}">Back to main page</a>
+    </form>
+</div>
 </body>
 </html>
