@@ -44,4 +44,9 @@ public class TaskServiceImpl implements TaskService {
     public List<Task> findTaskByUserIdAndDeadline(int userId, Date deadline) {
         return taskDao.findTaskByUserIdAndDeadline(userId, deadline);
     }
+
+    @Override
+    public List<Task> findTaskByCompanyId(int companyId) {
+        return taskDao.findTaskByCompanyId(companyId);
+    }
 }

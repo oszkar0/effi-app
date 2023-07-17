@@ -60,4 +60,16 @@ public class TaskDaoImpl implements TaskDao{
 
         return tasks;
     }
+
+    @Override
+    public List<Task> findTaskByCompanyId(int companyId) {
+        TypedQuery<Task> query = entityManager.createQuery("SELECT t FROM Task t " +
+                "WHERE t.company.id =: companyId", Task.class);
+
+        query.setParameter("companyId", companyId);
+
+        List<Task> tasks = query.getResultList();
+
+        return tasks;
+    }
 }

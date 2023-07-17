@@ -11,4 +11,5 @@ public interface TaskDao {
     List<Task> findTaskByUserId(int userId);
     List<Task> findTaskByUserIdAndDeadline(int userId, Date deadline);
     void deleteTaskById(int id);
+    List<Task> findTaskByCompanyId(int companyId);
 }

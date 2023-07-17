@@ -11,4 +11,5 @@ public interface TaskService {
     List<Task> findTaskByUserId(int userId);
     void deleteTaskById(int id);
     List<Task> findTaskByUserIdAndDeadline(int userId, Date deadline);
+    List<Task> findTaskByCompanyId(int companyId);
 }
