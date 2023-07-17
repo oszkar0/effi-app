@@ -76,7 +76,7 @@ public class MainController {
     public String getTaskDetails(@RequestParam("taskId") int taskId, Model model) {
         PrincipalInformation principalInformation = getPrincipalInformation();
 
-        checkNormalEmployeeAccessingHisTask(principalInformation, taskId);
+        checkTaskAccess(principalInformation, taskId);
 
         Task task = taskService.findTaskById(taskId);
 
@@ -138,7 +138,7 @@ public class MainController {
     public String deleteTask(@RequestParam("taskId") int taskId){
         PrincipalInformation principalInformation = getPrincipalInformation();
 
-        checkNormalEmployeeAccessingHisTask(principalInformation, taskId);
+        checkTaskAccess(principalInformation, taskId);
 
         //find user id to redirect to users tasks
         Long userId = taskService.findTaskById(taskId).getUser().getId();
@@ -148,17 +148,34 @@ public class MainController {
         return "redirect:/view-user-tasks?userId=" + userId;
     }
 
-    private void checkNormalEmployeeAccessingHisTask(PrincipalInformation principalInformation,int taskId)
-            throws AccessDeniedException{
-        //check condition that normal employee can access only his tasks
-        if(!principalInformation.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_MANAGER"))
-                && !taskService.findTaskByUserId(principalInformation.getId().intValue())
+
+    private void checkTaskAccess(PrincipalInformation principalInformation, int taskId){
+        //check if task user is trying to access is from the users company
+        boolean isTaskFromTheSameCompany = taskService.findTaskByCompanyId(principalInformation.getCompany().getId())
                 .stream()
                 .map(task -> task.getId())
-                .anyMatch(id -> id.equals(taskId))){
+                .anyMatch(id -> id.equals(taskId));
+
+        if(!isTaskFromTheSameCompany){
+            throw new AccessDeniedException("Access denied");
+        }
+
+        //check if task is users task
+        boolean isTaskUsersTask = taskService.findTaskByUserId(principalInformation.getId().intValue())
+                .stream()
+                .map(task -> task.getId())
+                .anyMatch(id -> id.equals(taskId));
+
+        boolean isUserManager =
+                principalInformation.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_MANAGER"));
+
+        //check if user is a manager -> manager can access all tasks among company
+        //if user is not manager -> he can only access his own tasks
+        if(!isUserManager && !isTaskUsersTask){
             throw new AccessDeniedException("Access denied");
         }
     }
+
 
     @GetMapping("/main-page")
     public String getTmpMain(Model model){
