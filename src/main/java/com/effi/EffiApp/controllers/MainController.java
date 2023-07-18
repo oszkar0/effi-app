@@ -59,10 +59,7 @@ public class MainController {
     public String getUserTasks(@RequestParam("userId") int userId, Model model){
         PrincipalInformation principalInformation = getPrincipalInformation();
 
-        if(principalInformation.getId() != userId &&
-                !principalInformation.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_MANAGER"))){
-            throw new AccessDeniedException("Access denied");
-        }
+        checkProfileAccess(principalInformation, userId);
 
         User user = userService.findUserAndHisTasksById(userId);
 
@@ -149,7 +146,7 @@ public class MainController {
     }
 
 
-    private void checkTaskAccess(PrincipalInformation principalInformation, int taskId){
+    private void checkTaskAccess(PrincipalInformation principalInformation, int taskId) throws AccessDeniedException{
         //check if task user is trying to access is from the users company
         boolean isTaskFromTheSameCompany = taskService.findTaskByCompanyId(principalInformation.getCompany().getId())
                 .stream()
@@ -172,6 +169,34 @@ public class MainController {
         //check if user is a manager -> manager can access all tasks among company
         //if user is not manager -> he can only access his own tasks
         if(!isUserManager && !isTaskUsersTask){
+            throw new AccessDeniedException("Access denied");
+        }
+    }
+
+    private void checkProfileAccess(PrincipalInformation principalInformation, int userId) throws AccessDeniedException{
+        //check if user is trying to access his own profile
+        boolean isProfileUsersProfile = (userId == principalInformation.getId());
+
+        if(isProfileUsersProfile){
+            return;
+        }
+
+        //check if accessed userId is from the same company our logged user is
+        boolean isProfileFromTheSameCompany = userService.findUserByCompanyId(principalInformation.getCompany().getId())
+                .stream()
+                .map(user -> user.getId())
+                .anyMatch(id -> id.equals(userId));
+
+        if(!isProfileFromTheSameCompany) {
+            throw new AccessDeniedException("Access denied");
+        }
+
+        //if we are at that point, it means that user wants to access not his profile, but somebodys from
+        //the same company, only manager  can access profiles of other employees
+        boolean isUserManager =
+                principalInformation.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_MANAGER"));
+
+        if(!isUserManager){
             throw new AccessDeniedException("Access denied");
         }
     }
