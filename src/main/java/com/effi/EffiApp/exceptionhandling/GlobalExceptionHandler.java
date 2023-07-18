@@ -2,6 +2,9 @@ package com.effi.EffiApp.exceptionhandling;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -14,6 +17,14 @@ public class GlobalExceptionHandler {
 
     private Logger logger = Logger.getLogger(getClass().getName());
     public static final String DEFAULT_ERROR_VIEW = "error";
+    public static final String ACCESS_DENIED_VIEW = "access-denied";
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(AccessDeniedException.class)
+    public ModelAndView accessDeniedExceptionHandler(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName(ACCESS_DENIED_VIEW);
+        return mav;
+    }
 
     @ExceptionHandler(Exception.class)
     public ModelAndView defaultExceptionHandler(HttpServletRequest req,Exception e) throws Exception{
