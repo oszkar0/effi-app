@@ -186,7 +186,7 @@ public class MainController {
         boolean isProfileFromTheSameCompany = userService.findUserByCompanyId(principalInformation.getCompany().getId())
                 .stream()
                 .map(user -> user.getId())
-                .anyMatch(id -> id.equals(userId));
+                .anyMatch(id -> (id.intValue() == userId));
 
         if(!isProfileFromTheSameCompany) {
             throw new AccessDeniedException("Access denied");
