@@ -5,6 +5,8 @@ import com.effi.EffiApp.registration.employee.EmployeeRegistrationObject;
 import com.effi.EffiApp.registration.owner.OwnerRegistrationObject;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
+
 public interface UserService extends UserDetailsService {
     User findUserByEmail(String email);
     boolean userExists(String email);
@@ -14,4 +16,5 @@ public interface UserService extends UserDetailsService {
     void save(User user);
     void deleteUserById(int id);
     User findUserById(int id);
+    List<User> findUserByCompanyId(int companyId);
 }

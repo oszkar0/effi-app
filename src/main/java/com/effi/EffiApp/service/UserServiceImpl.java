@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -137,5 +138,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserById(int id) {
         return userDao.findUserById(id);
+    }
+
+    @Override
+    public List<User> findUserByCompanyId(int companyId) {
+        return userDao.findUserByCompanyId(companyId);
     }
 }

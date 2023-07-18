@@ -7,6 +7,8 @@ import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class UserDaoImpl implements UserDao{
     private EntityManager entityManager;
@@ -73,5 +75,17 @@ public class UserDaoImpl implements UserDao{
     @Override
     public User findUserById(int id) {
         return entityManager.find(User.class, id);
+    }
+
+    @Override
+    public List<User> findUserByCompanyId(int companyId) {
+        TypedQuery<User> query = entityManager.createQuery("select u from User u " +
+                "WHERE u.company.id =: companyId", User.class);
+
+        query.setParameter("companyId", companyId);
+
+        List<User> users = query.getResultList();
+
+        return users;
     }
 }
