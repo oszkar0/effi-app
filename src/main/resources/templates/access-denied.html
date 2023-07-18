@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>403 Forbidden</title>
+  <meta charset="UTF-8">
+  <title>Access forbidden page</title>
+  <link rel="stylesheet" th:href="@{/css/error.css}"/>
 </head>
 <body>
-<h1>403 Forbidden</h1>
-<p>Access to this resource is forbidden on this server.</p>
+<div class="error-container">
+  <h2>Error</h2>
+  <p>Oops! You are not permitted to access that page</p>
+  <a class="cta" th:href="@{/main-page}">Back to Main Page</a>
+</div>
 </body>
 </html>
