@@ -1,5 +1,6 @@
 package com.effi.EffiApp.controllers;
 
+import com.effi.EffiApp.endpoints.Endpoints;
 import com.effi.EffiApp.entity.Task;
 import com.effi.EffiApp.entity.User;
 import com.effi.EffiApp.security.PrincipalInformation;
@@ -42,7 +43,7 @@ public class MainController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/employees-list")
+    @GetMapping(Endpoints.EMPLOYEES_LIST)
     public String getMainPage(Model model){
         //get logged user
         PrincipalInformation principalInformation = getPrincipalInformation();
@@ -55,7 +56,7 @@ public class MainController {
         return "employees-list-page";
     }
 
-    @GetMapping("/view-user-tasks")
+    @GetMapping(Endpoints.USER_PROFILE)
     public String getUserTasks(@RequestParam("userId") int userId, Model model){
         PrincipalInformation principalInformation = getPrincipalInformation();
 
@@ -69,7 +70,7 @@ public class MainController {
         return "users-tasks-page";
     }
 
-    @GetMapping("/task-details")
+    @GetMapping(Endpoints.TASK_DETAILS)
     public String getTaskDetails(@RequestParam("taskId") int taskId, Model model) {
         PrincipalInformation principalInformation = getPrincipalInformation();
 
@@ -83,7 +84,7 @@ public class MainController {
         return "task-details";
     }
 
-    @PostMapping("/task-update")
+    @PostMapping(Endpoints.TASK_UPDATE)
     public String updateTask(@Valid @ModelAttribute("taskUpdated") Task taskUpdated){
         Task task = taskService.findTaskById(taskUpdated.getId());
 
@@ -91,7 +92,7 @@ public class MainController {
         task.setStatus(taskUpdated.getStatus());
 
         taskService.save(task);
-        return "redirect:/task-details?taskId=" + task.getId();
+        return "redirect:" + Endpoints.TASK_DETAILS + "?taskId=" + task.getId();
     }
 
     private PrincipalInformation getPrincipalInformation(){
@@ -112,12 +113,12 @@ public class MainController {
         return principalInformation;
     }
 
-    @GetMapping("/access-denied")
+    @GetMapping(Endpoints.ACCESS_DENIED)
     public String getAccessDeniedPage(){
         return "access-denied";
     }
 
-    @GetMapping("/delete-user")
+    @GetMapping(Endpoints.USER_DELETE)
     public String deleteUser(@RequestParam("userId") int userId){
         User user = userService.findUserById(userId);
 
@@ -128,10 +129,10 @@ public class MainController {
 
         userService.deleteUserById(userId);
 
-        return "redirect:/main-page";
+        return "redirect:" + Endpoints.EMPLOYEES_LIST;
     }
 
-    @GetMapping("/delete-task")
+    @GetMapping(Endpoints.TASK_DELETE)
     public String deleteTask(@RequestParam("taskId") int taskId){
         PrincipalInformation principalInformation = getPrincipalInformation();
 
@@ -142,7 +143,7 @@ public class MainController {
 
         taskService.deleteTaskById(taskId);
 
-        return "redirect:/view-user-tasks?userId=" + userId;
+        return "redirect:" + Endpoints.USER_PROFILE + "?userId=" + userId;
     }
 
 
@@ -202,7 +203,7 @@ public class MainController {
     }
 
 
-    @GetMapping("/main-page")
+    @GetMapping(Endpoints.MAIN_PAGE)
     public String getTmpMain(Model model){
         PrincipalInformation principalInformation = getPrincipalInformation();
 
@@ -214,10 +215,10 @@ public class MainController {
         return "main-page";
     }
 
-    @GetMapping("/my-profile")
+    @GetMapping(Endpoints.MY_PROFILE)
     public String redirectToUsersTasks(){
         PrincipalInformation principalInformation = getPrincipalInformation();
 
-        return "redirect:/view-user-tasks?userId=" + principalInformation.getId();
+        return "redirect:" + Endpoints.USER_PROFILE +"?userId=" + principalInformation.getId();
     }
 }

@@ -41,14 +41,14 @@
       <div class="centered">
         <a classs="cta" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/delete-user(userId=${user.id})}"
            onclick="if (!confirm('Are you sure you want to delete this employee?')) return false"><button>Delete</button></a>
-        <a classs="cta" sec:authorize="hasRole('ROLE_MANAGER')" th:href="@{/view-user-tasks(userId=${user.id})}"><button>View profile</button></a>
+        <a classs="cta" sec:authorize="hasRole('ROLE_MANAGER')" th:href="@{/user-profile(userId=${user.id})}"><button>View profile</button></a>
       </div>
     </td>
   </tr>
   </tbody>
 </table>
 
-<a classs="cta" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/register/show-employee-registration-form}"><button>Add new employee/manager</button></a>
+<a classs="cta" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/register/show-new-employee-form}"><button>Add new employee/manager</button></a>
 </div>
 </body>
 </html>

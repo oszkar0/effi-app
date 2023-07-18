@@ -1,5 +1,6 @@
 package com.effi.EffiApp.controllers;
 
+import com.effi.EffiApp.endpoints.Endpoints;
 import com.effi.EffiApp.entity.Task;
 import com.effi.EffiApp.entity.User;
 import com.effi.EffiApp.registration.task.TaskRegistrationObject;
@@ -29,7 +30,7 @@ import java.io.ByteArrayInputStream;
 import java.util.logging.Logger;
 
 @Controller
-@RequestMapping("/register")
+@RequestMapping(Endpoints.REGISTRATION)
 public class RegistrationController {
     //create logger for information purposes
     private Logger logger = Logger.getLogger(getClass().getName());
@@ -40,18 +41,17 @@ public class RegistrationController {
         this.userService = userService;
     }
 
-    @GetMapping("/show-registration-form")
-    public String getRegistrationForm(Model model){
+    @GetMapping(Endpoints.NEW_COMPANY_FORM)
+    public String getCompanyRegistrationForm(Model model){
         model.addAttribute("registrationObject", new OwnerRegistrationObject());
 
         return "registration-form";
     }
 
-    @PostMapping("/process-registration")
-    public String processRegistration(
+    @PostMapping(Endpoints.NEW_COMPANY_PROCESSING)
+    public String processCompanyRegistration(
             @Valid @ModelAttribute("registrationObject") OwnerRegistrationObject registrationObject,
             BindingResult bindingResult){
-        logger.info("Processing user: " + registrationObject.getUserEmail());
 
         //check if errors occured, if occurred return filled form with error messages
         if(bindingResult.hasErrors()){
@@ -59,30 +59,25 @@ public class RegistrationController {
         }
 
         if(userService.userExists(registrationObject.getUserEmail())){
-            logger.warning("User already exists");
             return "redirect:/login";
         }
 
         userService.save(registrationObject);
 
-        logger.info("Successfully saved user " + registrationObject.getUserEmail()  + " to db");
-
-        return "redirect:/login";
+        return "redirect:" + Endpoints.LOGIN;
     }
 
-    @GetMapping("/show-employee-registration-form")
+    @GetMapping(Endpoints.NEW_EMPLOYEE_FORM)
     public String getEmployeeRegistrationForm(Model model){
         model.addAttribute("employeeRegistrationObject", new EmployeeRegistrationObject());
 
         return "employee-form";
     }
 
-    @PostMapping("/process-employee-registration")
+    @PostMapping(Endpoints.NEW_EMPLOYEE_PROCESSING)
     public String processEmployeeRegistration(
             @Valid @ModelAttribute("registrationObject") EmployeeRegistrationObject employeeRegistrationObject,
             BindingResult bindingResult, RedirectAttributes redirectAttributes){
-
-        logger.info("Processing user: " + employeeRegistrationObject.getEmail());
 
         //check if errors occurred, if occurred return filled form with error messages
         if(bindingResult.hasErrors()){
@@ -91,8 +86,7 @@ public class RegistrationController {
 
         //check if user is already in db
         if(userService.userExists(employeeRegistrationObject.getEmail())){
-            logger.warning("User already exists");
-            return "redirect:/main-page";
+            return "redirect:" + Endpoints.MAIN_PAGE;
         }
 
         //generate and set random password which can be changed by employee later
@@ -100,16 +94,7 @@ public class RegistrationController {
         employeeRegistrationObject.setPassword(password);
 
         //get the logged user
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object loggedUser = authentication.getPrincipal();
-        PrincipalInformation principalInformation = null;
-
-        if (loggedUser instanceof UserDetails) {
-            principalInformation = ((PrincipalInformation)loggedUser);
-        } else {
-            String email = loggedUser.toString();
-            principalInformation = (PrincipalInformation) userService.loadUserByUsername(email);
-        }
+        PrincipalInformation principalInformation = getPrincipalInformation();
 
         //set new employee's company to admins(owners) company and add user to company
         employeeRegistrationObject.setCompany(principalInformation.getCompany());
@@ -117,17 +102,17 @@ public class RegistrationController {
         userService.save(employeeRegistrationObject);
 
         redirectAttributes.addFlashAttribute("employee", employeeRegistrationObject);
-        return "redirect:/register/new-employee-info";
+        return "redirect:" + Endpoints.REGISTRATION_NEW_EMPLOYEE_INFO;
     }
 
-    @GetMapping("/new-employee-info")
+    @GetMapping(Endpoints.NEW_EMPLOYEE_INFO)
     public String getNewEmployeeInfo(Model model, @ModelAttribute("employee") EmployeeRegistrationObject employee){
         model.addAttribute("employee", employee);
 
         return "new-employee-info";
     }
 
-    @PostMapping(value = "/create-PDF",  produces = MediaType.APPLICATION_PDF_VALUE)
+    @PostMapping(value = Endpoints.NEW_EMPLOYEE_PDF,  produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> getNewEmployeeInfoPdf(
             @ModelAttribute("employee") EmployeeRegistrationObject employee){
         ByteArrayInputStream bis = PdfGeneration.generateNewEmployeeAccountInfo(employee);
@@ -142,7 +127,7 @@ public class RegistrationController {
                 .body(new InputStreamResource(bis));
     }
 
-    @GetMapping("/show-new-task-form")
+    @GetMapping(Endpoints.NEW_TASK_FORM)
     public String showNewTaskForm(@RequestParam("userId") int userId, Model model){
         TaskRegistrationObject task = new TaskRegistrationObject();
         task.setUserId(userId);
@@ -152,12 +137,10 @@ public class RegistrationController {
         return "task-form";
     }
 
-    @PostMapping("/process-new-task")
+    @PostMapping(Endpoints.NEW_TASK_PROCESSING)
     public String processNewTask(
             @Valid @ModelAttribute("task") TaskRegistrationObject task,
             BindingResult bindingResult){
-
-        logger.info("Processing task: " + task.getTitle());
 
         //check if errors occurred, if occurred return filled form with error messages
         if(bindingResult.hasErrors()){
@@ -181,6 +164,24 @@ public class RegistrationController {
         //save
         userService.save(user);
 
-        return "redirect:/view-user-tasks?userId=" + task.getUserId();
+        return "redirect:" + Endpoints.USER_PROFILE + "?userId=" + task.getUserId();
+    }
+
+    private PrincipalInformation getPrincipalInformation(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object loggedUser = authentication.getPrincipal();
+
+        String email = null;
+        PrincipalInformation principalInformation = null;
+
+        if (loggedUser instanceof UserDetails) {
+            email = ((PrincipalInformation)loggedUser).getUsername();
+        } else {
+            email = loggedUser.toString();
+        }
+
+        principalInformation = (PrincipalInformation) userService.loadUserByUsername(email);
+
+        return principalInformation;
     }
 }
