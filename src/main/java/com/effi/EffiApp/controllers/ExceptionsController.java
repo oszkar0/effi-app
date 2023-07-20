@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(Endpoints.EXCEPTION_DEFAULT_ERROR)
+@RequestMapping(Endpoints.EXCEPTION_PREFIX)
 public class ExceptionsController {
     @GetMapping(Endpoints.ACCESS_DENIED)
     public String getAccessDeniedPage(){
