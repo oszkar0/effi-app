@@ -7,12 +7,12 @@
 </head>
 <body>
 <header>
-  <a th:href="@{/main-page}"><img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/></a>
+  <a th:href="@{/tasks-and-profiles/main-page}"><img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/></a>
 </header>
 
 <div class="container">
   <h3>Create Task</h3>
-  <form action="#" th:action="@{/register/process-new-task}" th:object="${task}" method="POST">
+  <form action="#" th:action="@{/tasks-and-profiles/process-new-task}" th:object="${task}" method="POST">
     <input type="hidden" th:field="*{userId}"/>
 
     <div class="form-group">

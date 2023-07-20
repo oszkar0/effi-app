@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymleaf.org/extras.spring-security">
 <head>
   <meta charset="UTF-8">
   <title>Task details</title>
@@ -7,7 +8,7 @@
 </head>
 <body>
 <header>
-  <a th:href="@{/main-page}"><img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/></a>
+  <a th:href="@{/tasks-and-profiles/main-page}"><img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/></a>
 </header>
 <div class="container">
   <h2>Task details</h2>
@@ -15,7 +16,7 @@
   <p>Title: <span th:text="${task.title}"></span></p>
   <p>Description: <span th:text="${task.description}"></span></p>
 
-  <form action="#" th:action="@{/task-update}" th:object="${taskUpdated}" method="POST">
+  <form action="#" th:action="@{/tasks-and-profiles/task-update}" th:object="${taskUpdated}" method="POST">
     <input hidden="hidden" th:field="*{id}">
 
     <label>Deadline:</label>
@@ -30,7 +31,7 @@
 
     <input class="submit-button" type="submit" value="Update">
   </form>
-  <a class="delete-link" th:href="@{/delete-task(taskId=${task.id})}">Delete</a>
+  <a class="delete-link" sec:authorize="hasRole('ROLE_MANAGER')" th:href="@{/tasks-and-profiles/delete-task(taskId=${task.id})}">Delete</a>
 </div>
 </body>
 </html>

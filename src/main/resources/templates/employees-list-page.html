@@ -10,12 +10,12 @@
 </head>
 <body>
 <header>
-  <a th:href="@{/main-page}"><img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/></a>
+  <a th:href="@{tasks-and-profiles//main-page}"><img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/></a>
 
   <nav>
     <ul class="nav_links">
-      <li sec:authorize="hasRole('ROLE_MANAGER')"><a th:href="@{/employees-list}">Employees list</a></li>
-      <li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a th:href="@{/my-profile}">My profile</a></li>
+      <li sec:authorize="hasRole('ROLE_MANAGER')"><a th:href="@{/employees/employees-list}">Employees list</a></li>
+      <li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a th:href="@{/tasks-and-profiles/my-profile}">My profile</a></li>
     </ul>
   </nav>
   <form action="#" th:action="@{/logout}" method="POST">
@@ -39,16 +39,16 @@
     <td th:text="${user.email}"></td>
     <td>
       <div class="centered">
-        <a classs="cta" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/delete-user(userId=${user.id})}"
+        <a classs="cta" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/employees/delete-user(userId=${user.id})}"
            onclick="if (!confirm('Are you sure you want to delete this employee?')) return false"><button>Delete</button></a>
-        <a classs="cta" sec:authorize="hasRole('ROLE_MANAGER')" th:href="@{/user-profile(userId=${user.id})}"><button>View profile</button></a>
+        <a classs="cta" sec:authorize="hasRole('ROLE_MANAGER')" th:href="@{/tasks-and-profiles/user-profile(userId=${user.id})}"><button>View profile</button></a>
       </div>
     </td>
   </tr>
   </tbody>
 </table>
 
-<a classs="cta" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/register/show-new-employee-form}"><button>Add new employee/manager</button></a>
+<a classs="cta" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/employees/show-new-employee-form}"><button>Add new employee/manager</button></a>
 </div>
 </body>
 </html>

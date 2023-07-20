@@ -7,13 +7,13 @@
 </head>
 <body>
 <header>
-  <a th:href="@{/main-page}"><img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/></a>
+  <a th:href="@{/tasks-and-profiles/main-page}"><img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/></a>
 </header>
 
 <div class="container">
   <h3>Employee Registration Form</h3>
 
-  <form action="#" th:action="@{/register/process-new-employee}" th:object="${employeeRegistrationObject}" method="POST">
+  <form action="#" th:action="@{/employees/process-new-employee}" th:object="${employeeRegistrationObject}" method="POST">
     <fieldset>
       <legend>User</legend>
 

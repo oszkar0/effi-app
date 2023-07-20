@@ -8,7 +8,7 @@
 <div class="container">
     <h1>New Employee Info</h1>
 
-    <form action="#" th:action="@{/register/create-PDF}" th:object="${employee}" method="POST">
+    <form action="#" th:action="@{/employees/create-new-employee-pdf}" th:object="${employee}" method="POST">
 
         <div>
             <label>First Name:</label>
@@ -30,7 +30,7 @@
             <input class="form-field" th:field="*{password}" readonly/>
         </div>
         <button class="submit-button" type="submit">Create PDF</button>
-        <a class="back-link" th:href="@{/main-page}">Back to main page</a>
+        <a class="back-link" th:href="@{/tasks-and-profiles/main-page}">Back to main page</a>
     </form>
 </div>
 </body>

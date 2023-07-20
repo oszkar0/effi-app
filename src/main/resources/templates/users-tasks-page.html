@@ -10,12 +10,12 @@
 </head>
 <body>
 <header>
-    <a th:href="@{/main-page}"><img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/></a>
+    <a th:href="@{/tasks-and-profiles/main-page}"><img class="logo" th:src="@{/logo/logo_effi.png}" alt="logo"/></a>
 
     <nav>
         <ul class="nav_links">
-            <li sec:authorize="hasRole('ROLE_MANAGER')"><a th:href="@{/employees-list}">Employees list</a></li>
-            <li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a th:href="@{/my-profile}">My profile</a></li>
+            <li sec:authorize="hasRole('ROLE_MANAGER')"><a th:href="@{/employees/employees-list}">Employees list</a></li>
+            <li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a th:href="@{/tasks-and-profiles/my-profile}">My profile</a></li>
         </ul>
     </nav>
     <form action="#" th:action="@{/logout}" method="POST">
@@ -46,13 +46,13 @@
                 <td th:text="${task.status}"></td>
                 <td>
                     <div class="centered">
-                        <a classs="cta" th:href="@{/task-details(taskId=${task.id})}"><button>Details</button></a>
+                        <a classs="cta" th:href="@{/tasks-and-profiles/task-details(taskId=${task.id})}"><button>Details</button></a>
                     </div>
                 </td>
             </tr>
             </tbody>
         </table>
-        <a classs="cta" th:href="@{/register/show-new-task-form(userId=${user.id})}"><button>New task</button></a>
+        <a class="cta" sec:authorize="hasRole('ROLE_MANAGER')" th:href="@{/tasks-and-profiles/show-new-task-form(userId=${user.id})}"><button>New task</button></a>
     </div>
 
 </body>
